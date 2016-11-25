@@ -54,11 +54,15 @@ describe('.diff', () => {
       });
 
       it('returns subset of right hand side value when a key value has been deleted', () => {
-        expect(diff({ a: { b: 1 }, c: 2, d: { e: 100 } }, { a: { b: 1 }, c: 2, d: {} })).to.deep.equal({ d: {} });
+        expect(diff({ a: { b: 1 }, c: 2, d: { e: 100 } }, { a: { b: 1 }, c: 2, d: {} })).to.deep.equal({ d: { e: undefined } });
       });
 
       it('returns subset of right hand side value when a key value has been added', () => {
         expect(diff({ a: 1 }, { a: 1, b: 2 })).to.deep.equal({ b: 2 });
+      });
+
+      it('returns keys as undefined when deleted from right hand side', () => {
+        expect(diff({ a: 1, b: { c: 2 }}, { a: 1 })).to.deep.equal({ b: undefined });
       });
     });
 
@@ -72,7 +76,7 @@ describe('.diff', () => {
       });
 
       it('returns subset of right hand side array as object of indices to value when right hand side array has deletions', () => {
-        expect(diff([1, 2, 3], [1, 3])).to.deep.equal({ 1: 3 });
+        expect(diff([1, 2, 3], [1, 3])).to.deep.equal({ 1: 3, 2: undefined });
       });
 
       it('returns subset of right hand side array as object of indices to value when right hand side array has additions', () => {

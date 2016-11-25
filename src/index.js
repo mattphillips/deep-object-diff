@@ -5,7 +5,13 @@ const diff = (lhs, rhs) => {
 
   if (typeof rhs !== 'object' || rhs === null) return rhs;
 
-  return Object.keys(rhs).reduce((acc, key) => {
+  const rhsKeys = Object.keys(rhs);
+
+  const deletedValues = Object.keys(lhs).reduce((acc, key) => {
+    return rhsKeys.indexOf(key) !== -1 ? acc : { ...acc, [key]: undefined };
+  }, {});
+
+  return rhsKeys.reduce((acc, key) => {
     if (!lhs.hasOwnProperty(key)) return { ...acc, [key]: rhs[key] };
 
     const lhsValue = lhs[key];
@@ -13,7 +19,7 @@ const diff = (lhs, rhs) => {
     if (isEqual(lhsValue, rhsValue)) return acc;
 
     return { ...acc, [key]: diff(lhsValue, rhsValue) };
-  }, {});
+  }, deletedValues);
 };
 
 export default diff;
