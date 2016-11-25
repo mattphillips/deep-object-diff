@@ -3,6 +3,26 @@
   "version": "0.0.1",
   "description": "Deep diffs two objects, including nested structures of arrays and objects, and return the difference.",
   "author": "Matt Phillips",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
+    "babel-istanbul": "^0.11.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2",
+    "mocha-each": "^1.0.3"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mattphillips/deep-object-diff.git"
