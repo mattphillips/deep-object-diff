@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import forEach from 'mocha-each';
 
 import diff from './';
 
@@ -6,54 +7,30 @@ describe('.diff', () => {
 
   describe('base case', () => {
     describe('equal', () => {
-      it('returns empty object when given ints are equal', () => {
-        expect(diff(1, 1)).to.deep.equal({});
-      });
-
-      it('returns empty object when given strings are equal', () => {
-        expect(diff('a', 'a')).to.deep.equal({});
-      });
-
-      it('returns empty object when given booleans are equal', () => {
-        expect(diff(true, true)).to.deep.equal({});
-      });
-
-      it('returns empty object when given parameters are null', () => {
-        expect(diff(null, null)).to.deep.equal({});
-      });
-
-      it('returns empty object when given parameters are undefined', () => {
-        expect(diff(undefined, undefined)).to.deep.equal({});
-      });
-
-      it('returns empty object when given objects are equal', () => {
-        expect(diff({ a: 1 }, { a: 1 })).to.deep.equal({});
-      });
-
-      it('returns empty object when given arrays are equal', () => {
-        expect(diff([1], [1])).to.deep.equal({});
+      forEach([
+        ['int', 1],
+        ['string', 'a'],
+        ['boolean', true],
+        ['null', null],
+        ['undefined', undefined],
+        ['object', { a: 1 }],
+        ['array', [1]],
+      ]).it('returns empty object when given values of type %s are equal', (type, value) => {
+        expect(diff(value, value)).to.deep.equal({});
       });
     });
 
     describe('not equal and not object', () => {
-      it('returns right hand side value when given ints are different', () => {
-        expect(diff(1, 2)).to.deep.equal(2);
-      });
-
-      it('returns right hand side value when given strings are different', () => {
-        expect(diff('a', 'b')).to.deep.equal('b');
-      });
-
-      it('returns right hand side value when given booleans are different', () => {
-        expect(diff(true, false)).to.deep.equal(false);
-      });
-
-      it('returns right hand side value when given values are not both null', () => {
-        expect(diff('hello', null)).to.deep.equal(null);
-      });
-
-      it('returns right hand side value when given values are not both undefined', () => {
-        expect(diff('hello', undefined)).to.deep.equal(undefined);
+      forEach([
+        [1, 2],
+        ['a', 'b'],
+        [true, false],
+        ['hello', null],
+        ['hello', undefined],
+        [null, undefined],
+        [undefined, null]
+      ]).it('returns right hand side value when different to left hand side value (%s, %s)', (lhs, rhs) => {
+        expect(diff(lhs, rhs)).to.deep.equal(rhs);
       });
     });
   });
