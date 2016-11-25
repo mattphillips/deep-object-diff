@@ -28,7 +28,8 @@ describe('.diff', () => {
         ['hello', null],
         ['hello', undefined],
         [null, undefined],
-        [undefined, null]
+        [undefined, null],
+        [null, { a: 1 }]
       ]).it('returns right hand side value when different to left hand side value (%s, %s)', (lhs, rhs) => {
         expect(diff(lhs, rhs)).to.deep.equal(rhs);
       });
