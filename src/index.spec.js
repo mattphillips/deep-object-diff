@@ -29,7 +29,8 @@ describe('.diff', () => {
         ['hello', undefined],
         [null, undefined],
         [undefined, null],
-        [null, { a: 1 }]
+        [null, { a: 1 }],
+        ['872983', { areaCode: '+44', number: '872983' }]
       ]).it('returns right hand side value when different to left hand side value (%s, %s)', (lhs, rhs) => {
         expect(diff(lhs, rhs)).to.deep.equal(rhs);
       });
