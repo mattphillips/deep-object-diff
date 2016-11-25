@@ -1,7 +1,8 @@
-import isEqual from 'lodash/fp/isEqual';
+const isObject = o => typeof o === 'object';
+const isEmpty = o => Object.keys(o).length === 0;
 
 const diff = (lhs, rhs) => {
-  if (isEqual(lhs, rhs)) return {};
+  if (lhs === rhs) return {};
 
   if (typeof rhs !== 'object' || rhs === null) return rhs;
 
@@ -14,11 +15,11 @@ const diff = (lhs, rhs) => {
   return rhsKeys.reduce((acc, key) => {
     if (!lhs.hasOwnProperty(key)) return { ...acc, [key]: rhs[key] };
 
-    const lhsValue = lhs[key];
-    const rhsValue = rhs[key];
-    if (isEqual(lhsValue, rhsValue)) return acc;
+    const difference = diff(lhs[key], rhs[key]);
 
-    return { ...acc, [key]: diff(lhsValue, rhsValue) };
+    if (isObject(difference) && isEmpty(difference)) return acc;
+
+    return { ...acc, [key]: difference };
   }, deletedValues);
 };
 
