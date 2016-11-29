@@ -1,10 +1,10 @@
-const isObject = o => typeof o === 'object';
+const isObject = o => o != null && typeof o === 'object';
 const isEmpty = o => Object.keys(o).length === 0;
 
 const diff = (lhs, rhs) => {
   if (lhs === rhs) return {};
 
-  if (!isObject(lhs) || !isObject(rhs) || rhs === null || lhs === null) return rhs;
+  if (!isObject(lhs) || !isObject(rhs)) return rhs;
 
   const rhsKeys = Object.keys(rhs);
 
