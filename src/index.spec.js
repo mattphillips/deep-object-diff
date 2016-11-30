@@ -43,6 +43,10 @@ describe('.diff', () => {
         expect(diff({ a: 1 }, { a: 2 })).to.deep.equal({ a: 2 });
       });
 
+      it('returns right hand side value when right hand side value is null', () => {
+        expect(diff({ a: 1 }, { a: null })).to.deep.equal({ a: null });
+      });
+
       it('returns subset of right hand side value when sibling objects differ', () => {
         expect(diff({ a: { b: 1 }, c: 2 }, { a: { b: 1 }, c: 3 })).to.deep.equal({ c: 3 });
       });
