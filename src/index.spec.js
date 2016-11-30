@@ -15,6 +15,7 @@ describe('.diff', () => {
         ['undefined', undefined],
         ['object', { a: 1 }],
         ['array', [1]],
+        ['function', () => ({})],
       ]).it('returns empty object when given values of type %s are equal', (type, value) => {
         expect(diff(value, value)).to.deep.equal({});
       });
@@ -30,7 +31,9 @@ describe('.diff', () => {
         [null, undefined],
         [undefined, null],
         [null, { a: 1 }],
-        ['872983', { areaCode: '+44', number: '872983' }]
+        ['872983', { areaCode: '+44', number: '872983' }],
+        [100, () => ({})],
+        [() => ({}), 100],
       ]).it('returns right hand side value when different to left hand side value (%s, %s)', (lhs, rhs) => {
         expect(diff(lhs, rhs)).to.deep.equal(rhs);
       });
