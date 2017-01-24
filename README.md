@@ -1,5 +1,7 @@
 # Deep Object Diff
 
+[![Build Status](https://travis-ci.org/mattphillips/deep-object-diff.svg?branch=master)](https://travis-ci.org/mattphillips/deep-object-diff)
+
 A small library that will deep diff two JavaScript Objects, including nested structures of arrays and objects, and return the difference.
 
 ### Useage:
