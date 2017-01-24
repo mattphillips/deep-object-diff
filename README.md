@@ -1,6 +1,7 @@
 # Deep Object Diff
 
 [![Build Status](https://travis-ci.org/mattphillips/deep-object-diff.svg?branch=master)](https://travis-ci.org/mattphillips/deep-object-diff)
+[![Coverage Status](https://coveralls.io/repos/github/mattphillips/deep-object-diff/badge.svg?branch=master)](https://coveralls.io/github/mattphillips/deep-object-diff?branch=master)
 
 A small library that will deep diff two JavaScript Objects, including nested structures of arrays and objects, and return the difference.
 
