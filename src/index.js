@@ -6,13 +6,11 @@ const diff = (lhs, rhs) => {
 
   if (!isObject(lhs) || !isObject(rhs)) return rhs;
 
-  const rhsKeys = Object.keys(rhs);
-
   const deletedValues = Object.keys(lhs).reduce((acc, key) => {
-    return rhsKeys.indexOf(key) !== -1 ? acc : { ...acc, [key]: undefined };
+    return rhs.hasOwnProperty(key) ? acc : { ...acc, [key]: undefined };
   }, {});
 
-  return rhsKeys.reduce((acc, key) => {
+  return Object.keys(rhs).reduce((acc, key) => {
     if (!lhs.hasOwnProperty(key)) return { ...acc, [key]: rhs[key] };
 
     const difference = diff(lhs[key], rhs[key]);
