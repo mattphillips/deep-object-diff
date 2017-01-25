@@ -1,4 +1,4 @@
-import { isEmpty, isObject } from './utils';
+import { isEmpty, isObject } from '../utils';
 
 const diff = (lhs, rhs) => {
   if (lhs === rhs) return {}; // equal return no diff
