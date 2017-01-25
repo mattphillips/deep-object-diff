@@ -4,7 +4,7 @@
   "description": "Deep diffs two objects, including nested structures of arrays and objects, and return the difference.",
   "main": "dist/index.js",
   "files": [
-    "dist/index.js",
+    "dist",
     "README.md"
   ],
   "scripts": {
