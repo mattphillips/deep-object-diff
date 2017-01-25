@@ -1,5 +1,4 @@
-const isObject = o => o != null && typeof o === 'object';
-const isEmpty = o => Object.keys(o).length === 0;
+import { isEmpty, isObject } from './utils';
 
 const diff = (lhs, rhs) => {
   if (lhs === rhs) return {}; // equal return no diff
