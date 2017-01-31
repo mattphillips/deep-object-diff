@@ -1,5 +1,7 @@
 # Deep Object Diff
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mattphillips/deep-object-diff.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/mattphillips/deep-object-diff.svg?branch=master)](https://travis-ci.org/mattphillips/deep-object-diff)
 [![Coverage Status](https://coveralls.io/repos/github/mattphillips/deep-object-diff/badge.svg?branch=master)](https://coveralls.io/github/mattphillips/deep-object-diff?branch=master)
 
