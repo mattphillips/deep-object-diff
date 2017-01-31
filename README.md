@@ -13,19 +13,19 @@ npm i --save deep-object-diff
 ```
 
 ## Functions available:
- - ### [`diff(originalObj, updatedObj)`](#diff)
+ - [`diff(originalObj, updatedObj)`](#diff)
  returns the difference of the original and updated objects
 
- - ### [`addedDiff(original, updatedObj)`](#addeddiff)
+ - [`addedDiff(original, updatedObj)`](#addeddiff)
  returns only the values added to the updated object
 
- - ### [`deletedDiff(original, updatedObj)`](#deleteddiff)
+ - [`deletedDiff(original, updatedObj)`](#deleteddiff)
  returns only the values deleted in the updated object
 
- - ### [`updatedDiff(original, updatedObj)`](#updateddiff)
+ - [`updatedDiff(original, updatedObj)`](#updateddiff)
  returns only the values that have been changed in the updated object
 
- - ### [`detailedDiff(original, updatedObj)`](#detaileddiff)
+ - [`detailedDiff(original, updatedObj)`](#detaileddiff)
  returns an object with the added, deleted and updated differences
 
 ## Importing
