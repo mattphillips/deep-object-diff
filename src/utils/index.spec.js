@@ -1,9 +1,35 @@
 import { expect } from 'chai';
 import forEach from 'mocha-each';
 
-import { isEmpty, isObject } from './';
+import { isDate, isEmpty, isObject } from './';
 
 describe('utils', () => {
+
+  describe('.isDate', () => {
+    forEach([
+      [new Date()],
+      [new Date('2016')],
+      [new Date('2016-01')],
+      [new Date('2016-01-01')],
+      [new Date('2016-01-01:14:45:20')],
+      [new Date('Tue Feb 14 2017 14:45:20 GMT+0000 (GMT)')],
+      [new Date('nonsense')],
+    ]).it('returns true when given a date object of %s', (date) => {
+      expect(isDate(date)).to.be.true;
+    });
+
+    forEach([
+      [100],
+      ['100'],
+      [false],
+      [{ a: 100 }],
+      [[100, 101, 102]],
+      [Date.parse('2016')],
+      [Date.now()],
+    ]).it('returns false when not given a date object of %s', (x) => {
+      expect(isDate(x)).to.be.false;
+    });
+  });
 
   describe('.isEmpty', () => {
     describe('returns true', () => {
