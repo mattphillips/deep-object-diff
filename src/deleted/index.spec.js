@@ -16,6 +16,7 @@ describe('.deletedDiff', () => {
         ['object', { a: 1 }],
         ['array', [1]],
         ['function', () => ({})],
+        ['date', new Date()],
       ]).it('returns empty object when given values of type %s are equal', (type, value) => {
         expect(deletedDiff(value, value)).to.deep.equal({});
       });
@@ -34,6 +35,7 @@ describe('.deletedDiff', () => {
         ['872983', { areaCode: '+44', number: '872983' }],
         [100, () => ({})],
         [() => ({}), 100],
+        [new Date('2017-01-01'), new Date('2017-01-02')],
       ]).it('returns empty object when given values are unequal', (lhs, rhs) => {
         expect(deletedDiff(lhs, rhs)).to.deep.equal({});
       });
@@ -57,6 +59,10 @@ describe('.deletedDiff', () => {
       it('returns keys as undefined when deeply deleted from right hand side', () => {
         expect(deletedDiff({ a: { b: 1 }, c: 2, d: { e: 100 } }, { a: { b: 1 }, c: 2, d: {} })).to.deep.equal({ d: { e: undefined } });
       });
+
+      it('returns subset of right hand side with deleted date', () => {
+        expect(deletedDiff({ date: new Date('2016') }, {})).to.eql({ date: undefined });
+      });
     });
 
     describe('arrays', () => {
@@ -70,6 +76,10 @@ describe('.deletedDiff', () => {
 
       it('returns subset of right hand side array as object of indices to value when right hand side array has deletions', () => {
         expect(deletedDiff([1, 2, 3], [1, 3])).to.deep.equal({ 2: undefined });
+      });
+
+      it('returns subset of right hand side with added date', () => {
+        expect(deletedDiff([new Date('2016')], [])).to.eql({ 0: undefined });
       });
     });
   });

@@ -16,6 +16,7 @@ describe('.diff', () => {
         ['object', { a: 1 }],
         ['array', [1]],
         ['function', () => ({})],
+        ['date', new Date()],
       ]).it('returns empty object when given values of type %s are equal', (type, value) => {
         expect(diff(value, value)).to.deep.equal({});
       });
@@ -34,6 +35,7 @@ describe('.diff', () => {
         ['872983', { areaCode: '+44', number: '872983' }],
         [100, () => ({})],
         [() => ({}), 100],
+        [new Date('2017-01-01'), new Date('2017-01-02')],
       ]).it('returns right hand side value when different to left hand side value (%s, %s)', (lhs, rhs) => {
         expect(diff(lhs, rhs)).to.deep.equal(rhs);
       });
@@ -90,6 +92,25 @@ describe('.diff', () => {
 
       it('returns subset of right hand side array as object of indices to value when right hand side array has additions', () => {
         expect(diff([1, 2, 3], [1, 2, 3, 9])).to.deep.equal({ 3: 9 });
+      });
+    });
+
+    describe('date', () => {
+      const lhs = new Date('2016');
+      const rhs = new Date('2017');
+      it('returns right hand side date when updated', () => {
+        expect(diff({ date: lhs }, { date: rhs })).to.deep.equal({ date: rhs });
+        expect(diff([lhs], [rhs])).to.deep.equal({ 0: rhs });
+      });
+
+      it('returns undefined when date deleted', () => {
+        expect(diff({ date: lhs }, {})).to.deep.equal({ date: undefined });
+        expect(diff([lhs], [])).to.deep.equal({ 0: undefined });
+      });
+
+      it('returns right hand side when date is added', () => {
+        expect(diff({}, { date: rhs })).to.deep.equal({ date: rhs });
+        expect(diff([], [rhs])).to.deep.equal({ 0: rhs });
       });
     });
   });

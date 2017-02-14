@@ -16,6 +16,7 @@ describe('.addedDiff', () => {
         ['object', { a: 1 }],
         ['array', [1]],
         ['function', () => ({})],
+        ['date', new Date()],
       ]).it('returns empty object when given values of type %s are equal', (type, value) => {
         expect(addedDiff(value, value)).to.deep.equal({});
       });
@@ -34,6 +35,7 @@ describe('.addedDiff', () => {
         ['872983', { areaCode: '+44', number: '872983' }],
         [100, () => ({})],
         [() => ({}), 100],
+        [new Date('2017-01-01'), new Date('2017-01-02')],
       ]).it('returns empty object when values are not equal (%s, %s)', (lhs, rhs) => {
         expect(addedDiff(lhs, rhs)).to.deep.equal({});
       });
@@ -57,6 +59,10 @@ describe('.addedDiff', () => {
       it('returns subset of right hand side value when a key value has been added deeply', () => {
         expect(addedDiff({ a: { b: 1} }, { a: { b: 1, c: 2 } })).to.deep.equal({ a: { c: 2 } });
       });
+
+      it('returns subset of right hand side with added date', () => {
+        expect(addedDiff({}, { date: new Date('2016') })).to.eql({ date: new Date('2016') });
+      });
     });
 
     describe('arrays', () => {
@@ -70,6 +76,10 @@ describe('.addedDiff', () => {
 
       it('returns subset of right hand side array as object of indices to value when right hand side array has additions', () => {
         expect(addedDiff([1, 2, 3], [1, 2, 3, 9])).to.deep.equal({ 3: 9 });
+      });
+
+      it('returns subset of right hand side with added date', () => {
+        expect(addedDiff([], [new Date('2016')])).to.eql({ 0: new Date('2016') });
       });
     });
   });
