@@ -16,7 +16,7 @@
     "test:watch": "npm test -- -w"
   },
   "author": "Matt Phillips",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
