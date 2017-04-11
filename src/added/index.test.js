@@ -81,5 +81,31 @@ describe('.addedDiff', () => {
         expect(addedDiff([], [new Date('2016')])).toEqual({ 0: new Date('2016') });
       });
     });
+
+    describe('object create null', () => {
+      test('returns subset of right hand side value when a key value has been added to the root', () => {
+        const lhs = Object.create(null);
+        const rhs = Object.create(null);
+        lhs.a = 1;
+        rhs.a = 1;
+        rhs.b = 2;
+        expect(addedDiff(lhs, rhs)).toEqual({ b: 2 });
+      });
+
+      test('returns subset of right hand side value when a key value has been added deeply', () => {
+        const lhs = Object.create(null);
+        const rhs = Object.create(null);
+        lhs.a = { b: 1};
+        rhs.a = { b: 1, c: 2 };
+        expect(addedDiff(lhs, rhs)).toEqual({ a: { c: 2 } });
+      });
+
+      test('returns subset of right hand side with added date', () => {
+        const lhs = Object.create(null);
+        const rhs = Object.create(null);
+        rhs.date = new Date('2016');
+        expect(addedDiff(lhs, rhs)).toEqual({ date: new Date('2016') });
+      });
+    });
   });
 });
