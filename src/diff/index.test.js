@@ -117,5 +117,61 @@ describe('.diff', () => {
         expect(diff([], [rhs])).toEqual({ 0: rhs });
       });
     });
+
+    describe('object create null', () => {
+      test('returns right hand side value when given objects are different', () => {
+        const lhs = Object.create(null);
+        lhs.a = 1;
+        const rhs = Object.create(null);
+        rhs.a = 2;
+        expect(diff(lhs, rhs)).toEqual({ a: 2 });
+      });
+
+      test('returns subset of right hand side value when sibling objects differ', () => {
+        const lhs = Object.create(null);
+        lhs.a = { b: 1 };
+        lhs.c = 2;
+        const rhs = Object.create(null);
+        rhs.a = { b: 1 };
+        rhs.c = 3;
+        expect(diff(lhs, rhs)).toEqual({ c: 3 });
+      });
+
+      test('returns subset of right hand side value when nested values differ', () => {
+        const lhs = Object.create(null);
+        lhs.a = { b: 1, c: 2};
+        const rhs = Object.create(null);
+        rhs.a = { b: 1, c: 3 };
+        expect(diff(lhs, rhs)).toEqual({ a: { c: 3 } });
+      });
+
+      test('returns subset of right hand side value when nested values differ at multiple paths', () => {
+        const lhs = Object.create(null);
+        lhs.a = { b: 1 };
+        lhs.c = 2;
+        const rhs = Object.create(null);
+        rhs.a = { b: 99 };
+        rhs.c = 3;
+        expect(diff(lhs, rhs)).toEqual({ a: { b: 99 }, c: 3 });
+      });
+
+      test('returns subset of right hand side value when a key value has been deleted', () => {
+        const lhs = Object.create(null);
+        lhs.a = { b: 1 };
+        lhs.c = 2;
+        const rhs = Object.create(null);
+        rhs.a = { b: 1 };
+        expect(diff(lhs, rhs)).toEqual({ c: undefined });
+      });
+
+      test('returns subset of right hand side value when a key value has been added', () => {
+        const lhs = Object.create(null);
+        lhs.a = 1;
+        const rhs = Object.create(null);
+        rhs.a = 1;
+        rhs.b = 2;
+        expect(diff(lhs, rhs)).toEqual({ b: 2 });
+      });
+    });
   });
 });

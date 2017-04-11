@@ -1,23 +1,26 @@
-import { isDate, isEmpty, isObject } from '../utils';
+import { isDate, isEmpty, isObject, properObject } from '../utils';
 
 const diff = (lhs, rhs) => {
   if (lhs === rhs) return {}; // equal return no diff
 
   if (!isObject(lhs) || !isObject(rhs)) return rhs; // return updated rhs
 
-  const deletedValues = Object.keys(lhs).reduce((acc, key) => {
-    return rhs.hasOwnProperty(key) ? acc : { ...acc, [key]: undefined };
+  const l = properObject(lhs);
+  const r = properObject(rhs);
+
+  const deletedValues = Object.keys(l).reduce((acc, key) => {
+    return r.hasOwnProperty(key) ? acc : { ...acc, [key]: undefined };
   }, {});
 
-  if (isDate(lhs) || isDate(rhs)) {
-    if (lhs.toString() == rhs.toString()) return {};
-    return rhs;
+  if (isDate(l) || isDate(r)) {
+    if (l.toString() == r.toString()) return {};
+    return r;
   }
 
-  return Object.keys(rhs).reduce((acc, key) => {
-    if (!lhs.hasOwnProperty(key)) return { ...acc, [key]: rhs[key] }; // return added rhs key
+  return Object.keys(r).reduce((acc, key) => {
+    if (!l.hasOwnProperty(key)) return { ...acc, [key]: r[key] }; // return added r key
 
-    const difference = diff(lhs[key], rhs[key]);
+    const difference = diff(l[key], r[key]);
 
     if (isObject(difference) && isEmpty(difference) && !isDate(difference)) return acc; // return no diff
 
