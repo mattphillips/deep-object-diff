@@ -9,11 +9,11 @@
   ],
   "scripts": {
     "build": "babel src -d dist --ignore *.spec.js",
-    "prepublish": "npm run build",
+    "prepublish": "yarn build",
     "test": "jest src/**/*.test.js",
-    "test:coverage": "jest --coverage",
-    "test:coveralls": "npm run test:coverage && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
-    "test:watch": "npm test -- --watch"
+    "test:coverage": "jest src/**/*.test.js --coverage",
+    "test:coveralls": "yarn test:coverage && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
+    "test:watch": "yarn test -- --watch"
   },
   "author": "Matt Phillips",
   "license": "MIT",

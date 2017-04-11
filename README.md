@@ -8,9 +8,9 @@
 A small library that can deep diff two JavaScript Objects, including nested structures of arrays and objects.
 
 ## Installation
-```
-npm i --save deep-object-diff
-```
+`yarn add deep-object-diff`
+
+`npm i --save deep-object-diff`
 
 ## Functions available:
  - [`diff(originalObj, updatedObj)`](#diff)
