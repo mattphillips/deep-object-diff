@@ -97,5 +97,11 @@ describe('.updatedDiff', () => {
         expect(updatedDiff([new Date('2016')], [new Date('2017')])).toEqual({ 0: new Date('2017') });
       });
     });
+
+    describe('date', () => {
+      test('returns empty object when dates are equal', () => {
+        expect(updatedDiff(new Date('2016'), new Date('2016'))).toEqual({});
+      });
+    });
   });
 });

@@ -97,6 +97,11 @@ describe('.diff', () => {
     describe('date', () => {
       const lhs = new Date('2016');
       const rhs = new Date('2017');
+
+      test('returns empty object when dates are equal', () => {
+        expect(diff(new Date('2016'), new Date('2016'))).toEqual({});
+      });
+
       test('returns right hand side date when updated', () => {
         expect(diff({ date: lhs }, { date: rhs })).toEqual({ date: rhs });
         expect(diff([lhs], [rhs])).toEqual({ 0: rhs });
