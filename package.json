@@ -1,6 +1,6 @@
 {
   "name": "deep-object-diff",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Deep diffs two objects, including nested structures of arrays and objects, and return the difference.",
   "main": "dist/index.js",
   "files": [
