@@ -1,4 +1,4 @@
-import { isDate, isEmpty, isObject } from '../utils';
+import { isDate, isEmpty, isObject, properObject } from '../utils';
 
 const updatedDiff = (lhs, rhs) => {
 
@@ -6,15 +6,18 @@ const updatedDiff = (lhs, rhs) => {
 
   if (!isObject(lhs) || !isObject(rhs)) return rhs;
 
-  if (isDate(lhs) || isDate(rhs)) {
-    if (lhs.toString() == rhs.toString()) return {};
-    return rhs;
+  const l = properObject(lhs);
+  const r = properObject(rhs);
+
+  if (isDate(l) || isDate(r)) {
+    if (l.toString() == r.toString()) return {};
+    return r;
   }
 
-  return Object.keys(rhs).reduce((acc, key) => {
+  return Object.keys(r).reduce((acc, key) => {
 
-    if (lhs.hasOwnProperty(key)) {
-      const difference = updatedDiff(lhs[key], rhs[key]);
+    if (l.hasOwnProperty(key)) {
+      const difference = updatedDiff(l[key], r[key]);
 
       if (isObject(difference) && isEmpty(difference) && !isDate(difference)) return acc;
 

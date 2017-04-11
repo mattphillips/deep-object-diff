@@ -103,5 +103,41 @@ describe('.updatedDiff', () => {
         expect(updatedDiff(new Date('2016'), new Date('2016'))).toEqual({});
       });
     });
+
+    describe('object create null', () => {
+      test('returns right hand side value when given objects are different at root', () => {
+        const lhs = Object.create(null);
+        lhs.a = 1;
+        const rhs = Object.create(null);
+        rhs.a = 2;
+        expect(updatedDiff(lhs, rhs)).toEqual({ a: 2 });
+      });
+
+      test('returns subset of right hand side value when sibling objects differ', () => {
+        const lhs = Object.create(null);
+        lhs.a = { b: 1 };
+        lhs.c = 2;
+        const rhs = Object.create(null);
+        rhs.a = { b: 1 };
+        rhs.c = 3;
+        expect(updatedDiff(lhs, rhs)).toEqual({ c: 3 });
+      });
+
+      test('returns subset of right hand side value when nested values differ', () => {
+        const lhs = Object.create(null);
+        lhs.a = { b: 1, c: 2 };
+        const rhs = Object.create(null);
+        rhs.a = { b: 1, c: 3 };
+        expect(updatedDiff(lhs, rhs)).toEqual({ a: { c: 3 } });
+      });
+
+      test('returns subset of right hand side with updated date', () => {
+        const lhs = Object.create(null);
+        lhs.date = new Date('2016');
+        const rhs = Object.create(null);
+        rhs.date = new Date('2017');
+        expect(updatedDiff(lhs, rhs)).toEqual({ date: new Date('2017') });
+      });
+    });
   });
 });
