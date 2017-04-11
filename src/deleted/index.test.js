@@ -81,5 +81,33 @@ describe('.deletedDiff', () => {
         expect(deletedDiff([new Date('2016')], [])).toEqual({ 0: undefined });
       });
     });
+
+    describe('object create null', () => {
+      test('returns keys as undefined when deleted from right hand side root', () => {
+        const lhs = Object.create(null);
+        const rhs = Object.create(null);
+        lhs.a = 1;
+        lhs.b = 2;
+        rhs.a = 1;
+        expect(deletedDiff(lhs, rhs)).toEqual({ b: undefined });
+      });
+
+      test('returns keys as undefined when deeply deleted from right hand side', () => {
+        const lhs = Object.create(null);
+        const rhs = Object.create(null);
+        lhs.a = { b: 1 };
+        lhs.c = { d: 100 };
+        rhs.a = { b: 1 };
+        rhs.c = {};
+        expect(deletedDiff(lhs, rhs)).toEqual({ c: { d: undefined } });
+      });
+
+      test('returns subset of right hand side with deleted date', () => {
+        const lhs = Object.create(null);
+        const rhs = Object.create(null);
+        lhs.date = new Date('2016');
+        expect(deletedDiff({ date: new Date('2016') }, rhs)).toEqual({ date: undefined });
+      });
+    });
   });
 });
