@@ -271,3 +271,8 @@ console.log(detailedDiff(lhs, rhs));
 }
 */
 ```
+
+
+## License
+
+MIT
