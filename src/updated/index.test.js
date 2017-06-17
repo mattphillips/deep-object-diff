@@ -16,6 +16,7 @@ describe('.updatedDiff', () => {
         ['array', [1]],
         ['function', () => ({})],
         ['date', new Date()],
+        ['date with milliseconds', new Date('2017-01-01T00:00:00.637Z')],
       ]).test('returns empty object when given values of type %s are equal', (type, value) => {
         expect(updatedDiff(value, value)).toEqual({});
       });
