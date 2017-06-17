@@ -10,7 +10,7 @@ const updatedDiff = (lhs, rhs) => {
   const r = properObject(rhs);
 
   if (isDate(l) || isDate(r)) {
-    if (l.toString() == r.toString()) return {};
+    if (l.valueOf() == r.valueOf()) return {};
     return r;
   }
 

@@ -35,6 +35,7 @@ describe('.updatedDiff', () => {
         [100, () => ({})],
         [() => ({}), 100],
         [new Date('2017-01-01'), new Date('2017-01-02')],
+        [new Date('2017-01-01T00:00:00.636Z'), new Date('2017-01-01T00:00:00.637Z')],
       ]).test('returns right hand side value when different to left hand side value (%s, %s)', (lhs, rhs) => {
         expect(updatedDiff(lhs, rhs)).toEqual(rhs);
       });
