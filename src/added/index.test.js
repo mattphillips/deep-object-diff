@@ -62,6 +62,38 @@ describe('.addedDiff', () => {
       test('returns subset of right hand side with added date', () => {
         expect(addedDiff({}, { date: new Date('2016') })).toEqual({ date: new Date('2016') });
       });
+
+      test('returns ..', () => {
+        expect(addedDiff(
+          [{one: true, two: true, three: true}],
+          [{inserted: true, one: true, two: true, three: true}]
+        )).toEqual({0: {inserted: true}});
+      });
+
+      test('returns ..', () => {
+        const orig = {
+          domains: [{
+            commands: [
+                {name: 'one'},
+                {name: 'two'},
+                {name: 'three'}
+            ]
+          }]
+        };
+        const updated = {
+          domains: [{
+            commands: [
+                {name: 'inserted'},
+                {name: 'one'},
+                {name: 'two'},
+                {name: 'three'}
+            ]
+          }]
+        };
+
+        expect(addedDiff(orig, updated)).not.toEqual({'domains': {'0': {'commands': {'3': {'name': 'three'}}}}});
+        expect(addedDiff(orig, updated)).toEqual({'domains': {'0': {'commands': {'0': {'name': 'inserted'}}}}});
+      });
     });
 
     describe('arrays', () => {
