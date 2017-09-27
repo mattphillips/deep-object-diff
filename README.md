@@ -1,9 +1,19 @@
-# Deep Object Diff
+<div align="center">
+  <h1>deep-object-diff</h1>
 
-[![npm version](https://badge.fury.io/js/deep-object-diff.svg)](https://badge.fury.io/js/deep-object-diff)
-[![Build Status](https://travis-ci.org/mattphillips/deep-object-diff.svg?branch=master)](https://travis-ci.org/mattphillips/deep-object-diff)
-[![Coverage Status](https://coveralls.io/repos/github/mattphillips/deep-object-diff/badge.svg?branch=master)](https://coveralls.io/github/mattphillips/deep-object-diff?branch=master)
-[![Greenkeeper badge](https://badges.greenkeeper.io/mattphillips/deep-object-diff.svg)](https://greenkeeper.io/)
+  ❄️
+
+  Deep diff two JavaScript Objects
+</div>
+
+<hr />
+
+[![Build Status](https://img.shields.io/travis/mattphillips/deep-object-diff.svg?style=flat-square)](https://travis-ci.org/mattphillips/deep-object-diff)
+[![Code Coverage](https://img.shields.io/coveralls/mattphillips/deep-object-diff.svg?style=flat-square)](https://coveralls.io/github/mattphillips/deep-object-diff?branch=master)
+[![version](https://img.shields.io/npm/v/deep-object-diff.svg?style=flat-square)](https://www.npmjs.com/package/deep-object-diff)
+[![downloads](https://img.shields.io/npm/dm/deep-object-diff.svg?style=flat-square)](http://npm-stat.com/charts.html?package=deep-object-diff&from=2016-11-23)
+[![MIT License](https://img.shields.io/npm/l/deep-object-diff.svg?style=flat-square)](https://github.com/mattphillips/deep-object-diff/blob/master/LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 A small library that can deep diff two JavaScript Objects, including nested structures of arrays and objects.
 
