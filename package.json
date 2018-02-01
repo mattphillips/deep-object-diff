@@ -3,8 +3,10 @@
   "version": "1.0.4",
   "description": "Deep diffs two objects, including nested structures of arrays and objects, and return the difference.",
   "main": "dist/index.js",
+  "types": "./index.d.ts",
   "files": [
     "dist",
+    "index.d.ts",
     "README.md"
   ],
   "scripts": {
