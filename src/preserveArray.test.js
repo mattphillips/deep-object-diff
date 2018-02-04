@@ -1,6 +1,6 @@
-import preseveArray from './preseveArray';
+import preserveArray from './preserveArray';
 
-describe('.preseveArray', () => {
+describe('.preserveArray', () => {
   test('returns diff with nested objects converted back to arrays when property is deleted', () => {
     const left = { a: [{ b: ['#', '#', '#', { hello: '' }] }, '#', { c: '', d: ['#', ''] }, '#'] };
     const right = { a: [{ b: ['#', '#', '#', { hello: 'world' }] }, '#', { c: 'hello', d: ['#', 'bob'] }] };
@@ -48,7 +48,7 @@ describe('.preseveArray', () => {
     delete expected.a[1];
     delete expected.a[2].d[0];
 
-    expect(preseveArray(diff, left, right)).toEqual(expected);
+    expect(preserveArray(diff, left, right)).toEqual(expected);
   });
 
   test('returns diff with nested objects converted back to arrays when new property is added', () => {
@@ -98,6 +98,6 @@ describe('.preseveArray', () => {
     delete expected.a[1];
     delete expected.a[2].d[0];
 
-    expect(preseveArray(diff, left, right)).toEqual(expected);
+    expect(preserveArray(diff, left, right)).toEqual(expected);
   });
 });
