@@ -8,7 +8,7 @@
 
 <hr />
 
-[![Build Status](https://img.shields.io/travis/mattphillips/deep-object-diff.svg?style=flat-square)](https://travis-ci.org/mattphillips/deep-object-diff)
+[![Build Status](https://img.shields.io/travis/mattphillips/deep-object-diff/master.svg?style=flat-square)](https://travis-ci.org/mattphillips/deep-object-diff/master)
 [![Code Coverage](https://img.shields.io/coveralls/mattphillips/deep-object-diff.svg?style=flat-square)](https://coveralls.io/github/mattphillips/deep-object-diff?branch=master)
 [![version](https://img.shields.io/npm/v/deep-object-diff.svg?style=flat-square)](https://www.npmjs.com/package/deep-object-diff)
 [![downloads](https://img.shields.io/npm/dm/deep-object-diff.svg?style=flat-square)](http://npm-stat.com/charts.html?package=deep-object-diff&from=2016-11-23)
