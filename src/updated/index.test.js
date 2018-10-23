@@ -1,12 +1,10 @@
-import forEach from 'jest-each';
-
 import updatedDiff from './';
 
 describe('.updatedDiff', () => {
 
   describe('base case', () => {
     describe('equal', () => {
-      forEach([
+      test.each([
         ['int', 1],
         ['string', 'a'],
         ['boolean', true],
@@ -17,13 +15,13 @@ describe('.updatedDiff', () => {
         ['function', () => ({})],
         ['date', new Date()],
         ['date with milliseconds', new Date('2017-01-01T00:00:00.637Z')],
-      ]).test('returns empty object when given values of type %s are equal', (type, value) => {
+      ])('returns empty object when given values of type %s are equal', (type, value) => {
         expect(updatedDiff(value, value)).toEqual({});
       });
     });
 
     describe('not equal and not object', () => {
-      forEach([
+      test.each([
         [1, 2],
         ['a', 'b'],
         [true, false],
@@ -37,7 +35,7 @@ describe('.updatedDiff', () => {
         [() => ({}), 100],
         [new Date('2017-01-01'), new Date('2017-01-02')],
         [new Date('2017-01-01T00:00:00.636Z'), new Date('2017-01-01T00:00:00.637Z')],
-      ]).test('returns right hand side value when different to left hand side value (%s, %s)', (lhs, rhs) => {
+      ])('returns right hand side value when different to left hand side value (%s, %s)', (lhs, rhs) => {
         expect(updatedDiff(lhs, rhs)).toEqual(rhs);
       });
     });

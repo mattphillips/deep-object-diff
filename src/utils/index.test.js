@@ -1,11 +1,9 @@
-import forEach from 'jest-each';
-
 import { isDate, isEmpty, isObject, properObject } from './';
 
 describe('utils', () => {
 
   describe('.isDate', () => {
-    forEach([
+    test.each([
       [new Date()],
       [new Date('2016')],
       [new Date('2016-01')],
@@ -13,11 +11,11 @@ describe('utils', () => {
       [new Date('2016-01-01:14:45:20')],
       [new Date('Tue Feb 14 2017 14:45:20 GMT+0000 (GMT)')],
       [new Date('nonsense')],
-    ]).test('returns true when given a date object of %s', (date) => {
+    ])('returns true when given a date object of %s', (date) => {
       expect(isDate(date)).toBe(true);
     });
 
-    forEach([
+    test.each([
       [100],
       ['100'],
       [false],
@@ -25,7 +23,7 @@ describe('utils', () => {
       [[100, 101, 102]],
       [Date.parse('2016')],
       [Date.now()],
-    ]).test('returns false when not given a date object of %s', (x) => {
+    ])('returns false when not given a date object of %s', (x) => {
       expect(isDate(x)).toBe(false);
     });
   });
@@ -61,14 +59,14 @@ describe('utils', () => {
       expect(isObject([])).toBe(true);
     });
 
-    forEach([
+    test.each([
       ['int', 1],
       ['string', 'a'],
       ['boolean', true],
       ['null', null],
       ['undefined', undefined],
       ['function', () => ({})],
-    ]).test('returns false when value is of type: %s', (type, value) => {
+    ])('returns false when value is of type: %s', (type, value) => {
       expect(isObject(value)).toBe(false);
     });
   });

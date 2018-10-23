@@ -1,12 +1,10 @@
-import forEach from 'jest-each';
-
 import deletedDiff from './';
 
 describe('.deletedDiff', () => {
 
   describe('base case', () => {
     describe('equal', () => {
-      forEach([
+      test.each([
         ['int', 1],
         ['string', 'a'],
         ['boolean', true],
@@ -16,13 +14,13 @@ describe('.deletedDiff', () => {
         ['array', [1]],
         ['function', () => ({})],
         ['date', new Date()],
-      ]).test('returns empty object when given values of type %s are equal', (type, value) => {
+      ])('returns empty object when given values of type %s are equal', (type, value) => {
         expect(deletedDiff(value, value)).toEqual({});
       });
     });
 
     describe('not equal and not object', () => {
-      forEach([
+      test.each([
         [1, 2],
         ['a', 'b'],
         [true, false],
@@ -35,7 +33,7 @@ describe('.deletedDiff', () => {
         [100, () => ({})],
         [() => ({}), 100],
         [new Date('2017-01-01'), new Date('2017-01-02')],
-      ]).test('returns empty object when given values are unequal', (lhs, rhs) => {
+      ])('returns empty object when given values: %s %s are unequal', (lhs, rhs) => {
         expect(deletedDiff(lhs, rhs)).toEqual({});
       });
     });
