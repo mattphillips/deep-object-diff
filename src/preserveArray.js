@@ -3,8 +3,10 @@ import { isObject } from './utils';
 const getLargerArray = (l, r) => l.length > r.length ? l : r;
 
 const preserve = (diff, left, right) => {
-
-  if (!isObject(diff)) return diff;
+  // Recursion stop conditions
+  // 1. The diff is not an object.
+  // 2. One of the side is undefined. Otherwise it causes errors
+  if (!isObject(diff) || left === undefined || right === undefined) return diff;
 
   return Object.keys(diff).reduce((acc, key) => {
 
