@@ -1,4 +1,8 @@
-export function diff (originalObj: object, updatedObj: object): object
+interface Options {
+  depth: number
+}
+
+export function diff (originalObj: object, updatedObj: object, options: Options): object
 
 export function addedDiff (originalObj: object, updatedObj: object): object
 

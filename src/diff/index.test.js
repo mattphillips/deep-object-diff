@@ -74,6 +74,10 @@ describe('.diff', () => {
       test('returns keys as undefined when deleted from right hand side', () => {
         expect(diff({ a: 1, b: { c: 2 }}, { a: 1 })).toEqual({ b: undefined });
       });
+
+      test('returns subset of right hand side for first level only', () => {
+        expect(diff({ a: 1, b: { c: 1 } }, { a: 1, b: { d: 2 } }, { depth: 1 })).toEqual({ b: { d: 2 } });
+      });
     });
 
     describe('arrays', () => {
