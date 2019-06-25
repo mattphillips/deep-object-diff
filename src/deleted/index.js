@@ -6,17 +6,25 @@ const deletedDiff = (lhs, rhs) => {
   const l = properObject(lhs);
   const r = properObject(rhs);
 
-  return Object.keys(l).reduce((acc, key) => {
-    if (r.hasOwnProperty(key)) {
-      const difference = deletedDiff(l[key], r[key]);
+  let changes = {}
 
-      if (isObject(difference) && isEmpty(difference)) return acc;
+  const lKeys = Object.keys(l)
 
-      return { ...acc, [key]: difference };
+  for (let i = 0; i < lKeys.length; i++) {
+    const key = lKeys[i]
+
+    if (!r.hasOwnProperty(key)) {
+      changes[key] = undefined
+      continue
     }
+    const difference = deletedDiff(l[key], r[key]);
 
-    return { ...acc, [key]: undefined };
-  }, {});
+    if (isObject(difference) && isEmpty(difference)) continue;
+    
+    changes[key] = difference
+  }
+
+  return changes
 };
 
 export default deletedDiff;

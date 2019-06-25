@@ -7,17 +7,25 @@ const addedDiff = (lhs, rhs) => {
   const l = properObject(lhs);
   const r = properObject(rhs);
 
-  return Object.keys(r).reduce((acc, key) => {
-    if (l.hasOwnProperty(key)) {
-      const difference = addedDiff(l[key], r[key]);
+  let changes = {}
 
-      if (isObject(difference) && isEmpty(difference)) return acc;
+  const rKeys = Object.keys(r)
 
-      return { ...acc, [key]: difference };
+  for (let i = 0; i < rKeys.length; i++) {
+    const key = rKeys[i]
+
+    if (!l.hasOwnProperty(key)) {
+      changes[key] = r[key]
+      continue
     }
+    const difference = addedDiff(l[key], r[key]);
 
-    return { ...acc, [key]: r[key] };
-  }, {});
+    if (isObject(difference) && isEmpty(difference)) continue;
+
+    changes[key] = difference
+  }
+
+  return changes
 };
 
 export default addedDiff;

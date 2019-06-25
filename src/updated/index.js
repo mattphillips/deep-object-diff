@@ -14,18 +14,25 @@ const updatedDiff = (lhs, rhs) => {
     return r;
   }
 
-  return Object.keys(r).reduce((acc, key) => {
 
-    if (l.hasOwnProperty(key)) {
-      const difference = updatedDiff(l[key], r[key]);
+  let changes = {}
 
-      if (isObject(difference) && isEmpty(difference) && !isDate(difference)) return acc;
+  const rKeys = Object.keys(r)
 
-      return { ...acc, [key]: difference };
-    }
+  for (let i = 0; i < rKeys.length; i++){
+    const key = rKeys[i]
 
-    return acc;
-  }, {});
+    if (!l.hasOwnProperty(key)) continue
+
+    const difference = updatedDiff(l[key], r[key]);
+
+    if (isObject(difference) && isEmpty(difference) && !isDate(difference)) continue;
+
+    changes[key] = difference
+
+  }
+
+  return changes
 };
 
 export default updatedDiff;
