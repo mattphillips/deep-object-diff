@@ -3,6 +3,10 @@ import { isDate, isEmpty, isObject, properObject } from '../utils';
 const diff = (lhs, rhs) => {
   if (lhs === rhs) return {}; // equal return no diff
 
+  if (typeof lhs === "number" && typeof rhs === "number") {
+    if (isNaN(lhs) && isNaN(rhs)) return {}; // NaN is equal
+  }
+
   if (!isObject(lhs) || !isObject(rhs)) return rhs; // return updated rhs
 
   const l = properObject(lhs);
