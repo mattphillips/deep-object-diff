@@ -13,6 +13,7 @@ describe('.diff', () => {
         ['object', { a: 1 }],
         ['array', [1]],
         ['function', () => ({})],
+        ['NaN', NaN],
         ['date', new Date()],
         ['date with milliseconds', new Date('2017-01-01T00:00:00.637Z')],
       ])('returns empty object when given values of type %s are equal', (type, value) => {
@@ -56,7 +57,7 @@ describe('.diff', () => {
       });
 
       test('returns subset of right hand side value when nested values differ', () => {
-        expect(diff({ a: { b: 1, c: 2} }, { a: { b: 1, c: 3 } })).toEqual({ a: { c: 3 } });
+        expect(diff({ a: { b: 1, c: 2 } }, { a: { b: 1, c: 3 } })).toEqual({ a: { c: 3 } });
       });
 
       test('returns subset of right hand side value when nested values differ at multiple paths', () => {
@@ -72,7 +73,7 @@ describe('.diff', () => {
       });
 
       test('returns keys as undefined when deleted from right hand side', () => {
-        expect(diff({ a: 1, b: { c: 2 }}, { a: 1 })).toEqual({ b: undefined });
+        expect(diff({ a: 1, b: { c: 2 } }, { a: 1 })).toEqual({ b: undefined });
       });
     });
 
@@ -139,7 +140,7 @@ describe('.diff', () => {
 
       test('returns subset of right hand side value when nested values differ', () => {
         const lhs = Object.create(null);
-        lhs.a = { b: 1, c: 2};
+        lhs.a = { b: 1, c: 2 };
         const rhs = Object.create(null);
         rhs.a = { b: 1, c: 3 };
         expect(diff(lhs, rhs)).toEqual({ a: { c: 3 } });
@@ -171,6 +172,16 @@ describe('.diff', () => {
         rhs.a = 1;
         rhs.b = 2;
         expect(diff(lhs, rhs)).toEqual({ b: 2 });
+      });
+    });
+
+    describe('nested NaN', () => {
+      test('returns empty object when there is nested NaN value', () => {
+        expect(diff({ a: 1, b: NaN }, { a: 1, b: NaN })).toEqual({});
+      });
+
+      test('returns subset of right hand side when a left hand side value is not a NaN', () => {
+        expect(diff({ a: 1, b: 2 }, { a: 1, b: NaN })).toEqual({ b: NaN });
       });
     });
   });
