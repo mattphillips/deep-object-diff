@@ -16,7 +16,7 @@ const addedDiff = (lhs, rhs) => {
       return { ...acc, [key]: difference };
     }
 
-    return { ...acc, [key]: r[key] };
+    return { ...acc, [key]: { after: r[key] } };
   }, {});
 };
 
