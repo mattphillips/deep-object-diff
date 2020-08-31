@@ -21,7 +21,7 @@ const updatedDiff = (lhs, rhs) => {
 
       if (isObject(difference) && isEmpty(difference) && !isDate(difference)) return acc;
 
-      return { ...acc, [key]: difference };
+      return { ...acc, [key]: { before: l[key], after: difference } };
     }
 
     return acc;
