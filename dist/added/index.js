@@ -62,7 +62,7 @@
         return _extends({}, acc, _defineProperty({}, key, difference));
       }
 
-      return _extends({}, acc, _defineProperty({}, key, r[key]));
+      return _extends({}, acc, _defineProperty({}, key, { after: r[key] }));
     }, {});
   };
 
