@@ -18,9 +18,7 @@
 A small library that can deep diff two JavaScript Objects, including nested structures of arrays and objects.
 
 ## Installation
-`yarn add deep-object-diff`
-
-`npm i --save deep-object-diff`
+`yarn add https://github.com/sanukerinc/deep-object-diff.git`
 
 ## Functions available:
  - [`diff(originalObj, updatedObj)`](#diff)
@@ -139,9 +137,13 @@ console.log(addedDiff(lhs, rhs));
   foo: {
     bar: {
       c: {
-        '2': 'z'
+        '2': {
+          after: 'z'
+        }
       },
-      d: 'Hello, world!'
+      d: {
+        after: 'Hello, world!'
+      }
     }
   }
 }
@@ -181,9 +183,13 @@ console.log(deletedDiff(lhs, rhs));
   foo: {
     bar: {
       a: {
-        '1': undefined
+        '1': {
+          before: 'b'
+        }
       },
-      e: undefined
+      e: {
+        before: 'Hello, world!'
+      }
     }
   }
 }
@@ -220,7 +226,10 @@ console.log(updatedDiff(lhs, rhs));
 
 /*
 {
-  buzz: 'fizz'
+  buzz: {
+    before: 'world'
+    after: 'fizz'
+  }
 }
 */
 ```
@@ -259,9 +268,13 @@ console.log(detailedDiff(lhs, rhs));
     foo: {
       bar: {
         c: {
-          '2': 'z'
+          '2': {
+            after: 'z'
+          }
         },
-        d: 'Hello, world!'
+        d: {
+          after: 'Hello, world!'
+        }
       }
     }
   },
@@ -269,14 +282,21 @@ console.log(detailedDiff(lhs, rhs));
     foo: {
       bar: {
         a: {
-          '1': undefined
+          '1': {
+            before: 'b'
+          }
         },
-        e: undefined
+        e: {
+          before: 100
+        }
       }
     }
   },
   updated: {
-    buzz: 'fizz'
+    buzz: {
+      before: 'world'
+      after: 'fizz'
+    }
   }
 }
 */
