@@ -67,6 +67,8 @@
 
         if ((0, _utils.isObject)(difference) && (0, _utils.isEmpty)(difference) && !(0, _utils.isDate)(difference)) return acc;
 
+        if ((0, _utils.isObject)(difference) && !_utils.isDate || (0, _utils.isObject)(l[key])) return _extends({}, acc, _defineProperty({}, key, difference));
+
         return _extends({}, acc, _defineProperty({}, key, { before: l[key], after: difference }));
       }
 
