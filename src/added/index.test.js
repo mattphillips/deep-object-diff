@@ -105,5 +105,13 @@ describe('.addedDiff', () => {
         expect(addedDiff(lhs, rhs)).toEqual({ date: new Date('2016') });
       });
     });
+
+    describe('object with non-function hasOwnProperty property', () => {
+      test('can represent the property in diff despite it being part of Object.prototype', () => {
+        const lhs = {};
+        const rhs = { hasOwnProperty: true };
+        expect(addedDiff(lhs, rhs)).toEqual({ hasOwnProperty: true });
+      });
+    });
   });
 });
