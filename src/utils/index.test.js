@@ -1,4 +1,4 @@
-import { isDate, isEmpty, isObject, properObject } from './';
+import { isDate, isEmpty, isObject } from './';
 
 describe('utils', () => {
 
@@ -68,29 +68,6 @@ describe('utils', () => {
       ['function', () => ({})],
     ])('returns false when value is of type: %s', (type, value) => {
       expect(isObject(value)).toBe(false);
-    });
-  });
-
-  describe('.properObject', () => {
-    it('returns given object when object has keys and hasOwnProperty function', () => {
-      const o = { a: 1 };
-      const a = [1];
-      expect(properObject(o)).toBe(o);
-      expect(properObject(a)).toBe(a);
-    });
-
-    it('returns given value when value is not an object', () => {
-      const o = 'hello';
-      expect(properObject(o)).toBe(o);
-    });
-
-    it('returns object that has given keys and hasOwnProperty function when given object is created from a null', () => {
-      const o = Object.create(null);
-      o.a = 1;
-      const actual = properObject(o);
-      expect(actual).toEqual({ a: 1 });
-      expect(typeof actual.hasOwnProperty === 'function').toBe(true);
-      expect(actual).not.toBe(o);
     });
   });
 });

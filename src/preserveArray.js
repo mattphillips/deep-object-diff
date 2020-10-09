@@ -1,4 +1,4 @@
-import { isObject } from './utils';
+import { isObject, hasOwnProperty } from './utils';
 
 const getLargerArray = (l, r) => l.length > r.length ? l : r;
 
@@ -16,7 +16,7 @@ const preserve = (diff, left, right) => {
       return {
         ...acc,
         [key]: array.reduce((acc2, item, index) => {
-          if (diff[key].hasOwnProperty(index)) {
+          if (hasOwnProperty(diff[key], index)) {
             acc2[index] = preserve(diff[key][index], leftArray[index], rightArray[index]); // diff recurse and check for nested arrays
             return acc2;
           }

@@ -1,14 +1,14 @@
-import { isEmpty, isObject, properObject } from '../utils';
+import { isEmpty, isObject, hasOwnProperty } from '../utils';
 
 const addedDiff = (lhs, rhs) => {
 
   if (lhs === rhs || !isObject(lhs) || !isObject(rhs)) return {};
 
-  const l = properObject(lhs);
-  const r = properObject(rhs);
+  const l = lhs;
+  const r = rhs;
 
   return Object.keys(r).reduce((acc, key) => {
-    if (l.hasOwnProperty(key)) {
+    if (hasOwnProperty(l, key)) {
       const difference = addedDiff(l[key], r[key]);
 
       if (isObject(difference) && isEmpty(difference)) return acc;
