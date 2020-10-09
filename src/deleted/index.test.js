@@ -107,5 +107,13 @@ describe('.deletedDiff', () => {
         expect(deletedDiff({ date: new Date('2016') }, rhs)).toEqual({ date: undefined });
       });
     });
+
+    describe('object with non-function hasOwnProperty property', () => {
+      test('can represent the property in diff despite it being part of Object.prototype', () => {
+        const lhs = { hasOwnProperty: true };
+        const rhs = {};
+        expect(deletedDiff(lhs, rhs)).toEqual({ hasOwnProperty: undefined });
+      });
+    });
   });
 });
