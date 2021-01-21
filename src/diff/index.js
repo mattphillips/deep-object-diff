@@ -13,7 +13,7 @@ const diff = (lhs, rhs) => {
   }, {});
 
   if (isDate(l) || isDate(r)) {
-    if (l.valueOf() == r.valueOf()) return {};
+    if (l.valueOf() === r.valueOf()) return {};
     return r;
   }
 
