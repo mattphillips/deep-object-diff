@@ -66,9 +66,6 @@
 
         return _extends({}, acc, _defineProperty({}, key, difference));
       }
-      console.log("l[key]", l[key]);
-      console.log("l[key]", _typeof(l[key]));
-      console.log("r[key]", r[key]);
       if (_typeof(l[key]) === "object" && r[key] === undefined) {
         var _difference = deletedDiff(l[key], {});
         if ((0, _utils.isObject)(_difference) && (0, _utils.isEmpty)(_difference)) return acc;
