@@ -18,7 +18,7 @@
 A small library that can deep diff two JavaScript Objects, including nested structures of arrays and objects.
 
 ## Installation
-`yarn add awcjack/deep-object-diff#delete-fix`
+`yarn add awcjack/deep-object-diff#real-fix`
 
 ## Functions available:
  - [`diff(originalObj, updatedObj)`](#diff)

@@ -15,6 +15,12 @@ const addedDiff = (lhs, rhs) => {
 
       return { ...acc, [key]: difference };
     }
+    if (typeof r[key] === "object" && l[key] === undefined) {
+      const difference = addedDiff({}, r[key]);
+      if (isObject(difference) && isEmpty(difference)) return acc;
+
+      return { ...acc, [key]: difference };
+    }
 
     return { ...acc, [key]: { after: r[key] } };
   }, {});
