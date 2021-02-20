@@ -14,6 +14,12 @@ const deletedDiff = (lhs, rhs) => {
 
       return { ...acc, [key]: difference };
     }
+    if (typeof l[key] === "object" && r[key] === undefined) {
+      const difference = deletedDiff(l[key], {});
+      if (isObject(difference) && isEmpty(difference)) return acc;
+
+      return { ...acc, [key]: difference };
+    }
 
     return { ...acc, [key]: { before: l[key] ,after: undefined } };
   }, {});

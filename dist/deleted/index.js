@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['module', 'exports', '../utils'], factory);
+    define(["module", "exports", "../utils"], factory);
   } else if (typeof exports !== "undefined") {
-    factory(module, exports, require('../utils'));
+    factory(module, exports, require("../utils"));
   } else {
     var mod = {
       exports: {}
@@ -11,11 +11,17 @@
     global.index = mod.exports;
   }
 })(this, function (module, exports, _utils) {
-  'use strict';
+  "use strict";
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+
+  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  };
 
   function _defineProperty(obj, key, value) {
     if (key in obj) {
@@ -60,11 +66,20 @@
 
         return _extends({}, acc, _defineProperty({}, key, difference));
       }
+      console.log("l[key]", l[key]);
+      console.log("l[key]", _typeof(l[key]));
+      console.log("r[key]", r[key]);
+      if (_typeof(l[key]) === "object" && r[key] === undefined) {
+        var _difference = deletedDiff(l[key], {});
+        if ((0, _utils.isObject)(_difference) && (0, _utils.isEmpty)(_difference)) return acc;
+
+        return _extends({}, acc, _defineProperty({}, key, _difference));
+      }
 
       return _extends({}, acc, _defineProperty({}, key, { before: l[key], after: undefined }));
     }, {});
   };
 
   exports.default = deletedDiff;
-  module.exports = exports['default'];
+  module.exports = exports["default"];
 });
