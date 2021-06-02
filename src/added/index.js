@@ -13,10 +13,12 @@ const addedDiff = (lhs, rhs) => {
 
       if (isObject(difference) && isEmpty(difference)) return acc;
 
-      return { ...acc, [key]: difference };
+      acc[key] = difference;
+      return acc;
     }
 
-    return { ...acc, [key]: r[key] };
+    acc[key] = r[key];
+    return acc;
   }, {});
 };
 
