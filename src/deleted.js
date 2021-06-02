@@ -12,10 +12,12 @@ const deletedDiff = (lhs, rhs) => {
 
       if (isObject(difference) && isEmpty(difference)) return acc;
 
-      return { ...acc, [key]: difference };
+      acc[key] = difference;
+      return acc;
     }
 
-    return { ...acc, [key]: undefined };
+    acc[key] = undefined;
+    return acc;
   }, {});
 };
 
