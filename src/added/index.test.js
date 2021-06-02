@@ -15,6 +15,7 @@ describe('.addedDiff', () => {
         ['function', () => ({})],
         ['date', new Date()],
       ])('returns empty object when given values of type %s are equal', (type, value) => {
+        console.log('here yub')
         expect(addedDiff(value, value)).toEqual({});
       });
     });
