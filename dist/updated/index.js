@@ -63,6 +63,9 @@
     return Object.keys(r).reduce(function (acc, key) {
 
       if (l.hasOwnProperty(key)) {
+        if (Array.isArray(l[key], r[key])) {
+          return acc;
+        }
         var difference = updatedDiff(l[key], r[key]);
 
         if ((0, _utils.isObject)(difference) && (0, _utils.isEmpty)(difference) && !(0, _utils.isDate)(difference)) return acc;

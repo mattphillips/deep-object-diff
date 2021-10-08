@@ -17,6 +17,9 @@ const updatedDiff = (lhs, rhs) => {
   return Object.keys(r).reduce((acc, key) => {
 
     if (l.hasOwnProperty(key)) {
+      if (Array.isArray(l[key], r[key])) {
+        return acc
+      }
       const difference = updatedDiff(l[key], r[key]);
 
       if (isObject(difference) && isEmpty(difference) && !isDate(difference)) return acc;

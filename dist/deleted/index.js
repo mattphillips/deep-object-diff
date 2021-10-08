@@ -1,21 +1,29 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(["module", "exports", "../utils"], factory);
+    define(["module", "exports", "lodash", "../utils"], factory);
   } else if (typeof exports !== "undefined") {
-    factory(module, exports, require("../utils"));
+    factory(module, exports, require("lodash"), require("../utils"));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod, mod.exports, global.utils);
+    factory(mod, mod.exports, global.lodash, global.utils);
     global.index = mod.exports;
   }
-})(this, function (module, exports, _utils) {
+})(this, function (module, exports, _lodash, _utils) {
   "use strict";
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+
+  var _lodash2 = _interopRequireDefault(_lodash);
+
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      default: obj
+    };
+  }
 
   var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
     return typeof obj;
@@ -60,6 +68,32 @@
 
     return Object.keys(l).reduce(function (acc, key) {
       if (r.hasOwnProperty(key)) {
+        if (Array.isArray(l[key]) && Array.isArray(r[key])) {
+          var oldFields = _lodash2.default.uniq(_lodash2.default.difference(l[key], r[key]));
+          if (oldFields.length === 0) {
+            return acc;
+          }
+          var oldFieldsIndex = _lodash2.default.map(oldFields, function (o) {
+            return {
+              content: o,
+              index: []
+            };
+          });
+
+          var _loop = function _loop(i) {
+            var index = _lodash2.default.findIndex(oldFields, function (o) {
+              return _lodash2.default.isEqual(o, l[key][i]);
+            });
+            if (index !== -1) {
+              oldFieldsIndex[index].index.push(i);
+            }
+          };
+
+          for (var i = 0; i < l[key].length; i++) {
+            _loop(i);
+          }
+          return _extends({}, acc, _defineProperty({}, key, { before: oldFieldsIndex }));
+        }
         var difference = deletedDiff(l[key], r[key]);
 
         if ((0, _utils.isObject)(difference) && (0, _utils.isEmpty)(difference)) return acc;
@@ -67,6 +101,9 @@
         return _extends({}, acc, _defineProperty({}, key, difference));
       }
       if (_typeof(l[key]) === "object" && r[key] === undefined) {
+        if (Array.isArray(l[key])) {
+          return _extends({}, acc, _defineProperty({}, key, { before: l[key] }));
+        }
         var _difference = deletedDiff(l[key], {});
         if ((0, _utils.isObject)(_difference) && (0, _utils.isEmpty)(_difference)) return acc;
 
