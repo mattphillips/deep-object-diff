@@ -154,7 +154,7 @@ describe('.detailedDiff', () => {
       test.each([
         [{}, { a: ["a", "b"] }],
       ])('returns right hand side value when different to left hand side value (%s, %s)', (lhs, rhs) => {
-        expect(detailedDiff(lhs, rhs)).toEqual({ "added": { a: { after: ["a", "b"] } }, "deleted": {}, "updated": {} });
+        expect(detailedDiff(lhs, rhs, false)).toEqual({ "added": { a: { after: ["a", "b"] } }, "deleted": {}, "updated": {} });
       });
     });
 
@@ -165,7 +165,7 @@ describe('.detailedDiff', () => {
         [{ a: ["a"] }, { a: ["a", "b", "b", "b"] }, [1, 2, 3]],
         [{ a: ["a"] }, { a: ["b", "a", "b", "b"] }, [0, 2, 3]],
       ])('returns inserted array element content and position of right hand side (%s, %s)', (lhs, rhs, indexes) => {
-        expect(detailedDiff(lhs, rhs)).toEqual({ "added": { a: { after: [{ content: "b", index: indexes }] } }, "deleted": {}, "updated": {} });
+        expect(detailedDiff(lhs, rhs, false)).toEqual({ "added": { a: { after: [{ content: "b", indices: indexes }] } }, "deleted": {}, "updated": {} });
       });
     });
 
@@ -176,7 +176,7 @@ describe('.detailedDiff', () => {
         [{ a: ["a", "b", "b", "b"] }, { a: ["a"] }, [1, 2, 3]],
         [{ a: ["b", "a", "b", "b"] }, { a: ["a"] }, [0, 2, 3]],
       ])('returns removed array element content and position of right hand side (%s, %s)', (lhs, rhs, indexes) => {
-        expect(detailedDiff(lhs, rhs)).toEqual({ "added": {}, "deleted": { a: { before: [{ content: "b", index: indexes }] } }, "updated": {} });
+        expect(detailedDiff(lhs, rhs, false)).toEqual({ "added": {}, "deleted": { a: { before: [{ content: "b", indices: indexes }] } }, "updated": {} });
       });
     });
 
@@ -184,7 +184,37 @@ describe('.detailedDiff', () => {
       test.each([
         [{ a: ["a", "c"] }, { a: ["a", "b"] }],
       ])('returns inserted and removed array element of right hand side (%s, %s)', (lhs, rhs) => {
-        expect(detailedDiff(lhs, rhs)).toEqual({ "added": { a: { after: [{ content: "b", index: [1] }] } }, "deleted": { a: { before: [{ content: "c", index: [1] }] } }, "updated": {} });
+        expect(detailedDiff(lhs, rhs, false)).toEqual({ "added": { a: { after: [{ content: "b", indices: [1] }] } }, "deleted": { a: { before: [{ content: "c", indices: [1] }] } }, "updated": {} });
+      });
+    });
+
+    describe('add array *element* (simple array)', () => {
+      test.each([
+        [{ a: ["a"] }, { a: ["a", "b"] }, [1]],
+        [{ a: ["a"] }, { a: ["a", "b", "b"] }, [1, 2]],
+        [{ a: ["a"] }, { a: ["a", "b", "b", "b"] }, [1, 2, 3]],
+        [{ a: ["a"] }, { a: ["b", "a", "b", "b"] }, [0, 2, 3]],
+      ])('returns inserted array element content and position of right hand side (%s, %s)', (lhs, rhs, indexes) => {
+        expect(detailedDiff(lhs, rhs)).toEqual({ "added": { a: { after: ["b"] } }, "deleted": {}, "updated": {} });
+      });
+    });
+
+    describe('remove array element (simple array)', () => {
+      test.each([
+        [{ a: ["a", "b"] }, { a: ["a"] }, [1]],
+        [{ a: ["a", "b", "b"] }, { a: ["a"] }, [1, 2]],
+        [{ a: ["a", "b", "b", "b"] }, { a: ["a"] }, [1, 2, 3]],
+        [{ a: ["b", "a", "b", "b"] }, { a: ["a"] }, [0, 2, 3]],
+      ])('returns removed array element content and position of right hand side (%s, %s)', (lhs, rhs, indexes) => {
+        expect(detailedDiff(lhs, rhs)).toEqual({ "added": {}, "deleted": { a: { before: ["b"] } }, "updated": {} });
+      });
+    });
+
+    describe('change array field (pull one insert one) (simple array)', () => {
+      test.each([
+        [{ a: ["a", "c"] }, { a: ["a", "b"] }],
+      ])('returns inserted and removed array element of right hand side (%s, %s)', (lhs, rhs) => {
+        expect(detailedDiff(lhs, rhs)).toEqual({ "added": { a: { after: ["b"] } }, "deleted": { a: { before: ["c"] } }, "updated": {} });
       });
     });
   });
@@ -198,7 +228,7 @@ describe('.detailedDiff', () => {
         [{ a: { a: ["a"] } }, { a: { a: ["a", "b", "b", "b"] } }, [1, 2, 3]],
         [{ a: { a: ["a"] } }, { a: { a: ["b", "a", "b", "b"] } }, [0, 2, 3]],
       ])('returns inserted array element content and position of right hand side (%s, %s)', (lhs, rhs, indexes) => {
-        expect(detailedDiff(lhs, rhs)).toEqual({ "added": { a: { a: { after: [{ content: "b", index: indexes }] } } }, "deleted": {}, "updated": {} });
+        expect(detailedDiff(lhs, rhs, false)).toEqual({ "added": { a: { a: { after: [{ content: "b", indices: indexes }] } } }, "deleted": {}, "updated": {} });
       });
     });
 
@@ -209,7 +239,7 @@ describe('.detailedDiff', () => {
         [{ a: { a: ["a", "b", "b", "b"] } }, { a: { a: ["a"] } }, [1, 2, 3]],
         [{ a: { a: ["b", "a", "b", "b"] } }, { a: { a: ["a"] } }, [0, 2, 3]],
       ])('returns removed array element content and position of right hand side (%s, %s)', (lhs, rhs, indexes) => {
-        expect(detailedDiff(lhs, rhs)).toEqual({ "added": {}, "deleted": { a: { a: { before: [{ content: "b", index: indexes }] } } }, "updated": {} });
+        expect(detailedDiff(lhs, rhs, false)).toEqual({ "added": {}, "deleted": { a: { a: { before: [{ content: "b", indices: indexes }] } } }, "updated": {} });
       });
     });
 
@@ -217,7 +247,53 @@ describe('.detailedDiff', () => {
       test.each([
         [{ a: { a: ["a", "c"] } }, { a: { a: ["a", "b"] } }],
       ])('returns inserted and removed array element of right hand side (%s, %s)', (lhs, rhs) => {
-        expect(detailedDiff(lhs, rhs)).toEqual({ "added": { a: { a: { after: [{ content: "b", index: [1] }] } } }, "deleted": { a: { a: { before: [{ content: "c", index: [1] }] } } }, "updated": {} });
+        expect(detailedDiff(lhs, rhs, false)).toEqual({ "added": { a: { a: { after: [{ content: "b", indices: [1] }] } } }, "deleted": { a: { a: { before: [{ content: "c", indices: [1] }] } } }, "updated": {} });
+      });
+    });
+
+    describe('reorder not in root', () => {
+      test.each([
+        [{ a: { a: ["a", "b", "c"] } }, { a: { a: ["a", "c", "b"] } }],
+      ])('returns inserted and removed array element of right hand side (%s, %s)', (lhs, rhs) => {
+        expect(detailedDiff(lhs, rhs, false)).toEqual({ "added": {}, "deleted": {}, "updated": { a: { a: { after: { b: [{ counter: 0, newIndex: 2 }], c: [{ counter: 0, newIndex: 1 }] } } } } });
+      });
+    });
+
+    describe('add array *element* not in root (simple array)', () => {
+      test.each([
+        [{ a: { a: ["a"] } }, { a: { a: ["a", "b"] } }, [1]],
+        [{ a: { a: ["a"] } }, { a: { a: ["a", "b", "b"] } }, [1, 2]],
+        [{ a: { a: ["a"] } }, { a: { a: ["a", "b", "b", "b"] } }, [1, 2, 3]],
+        [{ a: { a: ["a"] } }, { a: { a: ["b", "a", "b", "b"] } }, [0, 2, 3]],
+      ])('returns inserted array element content and position of right hand side (%s, %s)', (lhs, rhs, indexes) => {
+        expect(detailedDiff(lhs, rhs)).toEqual({ "added": { a: { a: { after: ["b"] } } }, "deleted": {}, "updated": {} });
+      });
+    });
+
+    describe('remove array element not in root (simple array)', () => {
+      test.each([
+        [{ a: { a: ["a", "b"] } }, { a: { a: ["a"] } }, [1]],
+        [{ a: { a: ["a", "b", "b"] } }, { a: { a: ["a"] } }, [1, 2]],
+        [{ a: { a: ["a", "b", "b", "b"] } }, { a: { a: ["a"] } }, [1, 2, 3]],
+        [{ a: { a: ["b", "a", "b", "b"] } }, { a: { a: ["a"] } }, [0, 2, 3]],
+      ])('returns removed array element content and position of right hand side (%s, %s)', (lhs, rhs, indexes) => {
+        expect(detailedDiff(lhs, rhs)).toEqual({ "added": {}, "deleted": { a: { a: { before: ["b"] } } }, "updated": {} });
+      });
+    });
+
+    describe('change array field (pull one insert one) not in root (simple array)', () => {
+      test.each([
+        [{ a: { a: ["a", "c"] } }, { a: { a: ["a", "b"] } }],
+      ])('returns inserted and removed array element of right hand side (%s, %s)', (lhs, rhs) => {
+        expect(detailedDiff(lhs, rhs)).toEqual({ "added": { a: { a: { after: ["b"] } } }, "deleted": { a: { a: { before: ["c"] } } }, "updated": {} });
+      });
+    });
+
+    describe('reorder not in root (simple array)', () => {
+      test.each([
+        [{ a: { a: ["a", "b", "c"] } }, { a: { a: ["a", "c", "b"] } }],
+      ])('returns inserted and removed array element of right hand side (%s, %s)', (lhs, rhs) => {
+        expect(detailedDiff(lhs, rhs)).toEqual({ "added": {}, "deleted": {}, "updated": {}});
       });
     });
   });

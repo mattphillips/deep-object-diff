@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { isEmpty, isObject, properObject } from '../utils';
 
-const addedDiff = (lhs, rhs) => {
+const addedDiff = (lhs, rhs, simpleArray = true) => {
 
   if (lhs === rhs || !isObject(lhs) || !isObject(rhs)) return {};
 
@@ -11,24 +11,26 @@ const addedDiff = (lhs, rhs) => {
   return Object.keys(r).reduce((acc, key) => {
     if (l.hasOwnProperty(key)) {
       if (Array.isArray(l[key]) && Array.isArray(r[key])) {
-        //const allKeys = _.merge(l[key], r[key]) ?? []
         const newFields = _.uniq(_.difference(r[key], l[key]))
         if (newFields.length === 0) {
           return acc
         }
-        const newFieldsIndex = _.map(newFields, o => ({
+        if (simpleArray) {
+          return { ...acc, [key]: { after: _.uniq(_.difference(r[key], l[key])) } }
+        }
+        const newFieldsIndices = _.map(newFields, o => ({
           content: o,
-          index: []
+          indices: []
         }))
         for (let i = 0; i < r[key].length; i++) {
           const index = _.findIndex(newFields, o => _.isEqual(o, r[key][i]))
           if (index !== -1) {
-            newFieldsIndex[index].index.push(i)
+            newFieldsIndices[index].indices.push(i)
           }
         }
-        return { ...acc, [key]: { after: newFieldsIndex } }
+        return { ...acc, [key]: { after: newFieldsIndices } }
       }
-      const difference = addedDiff(l[key], r[key]);
+      const difference = addedDiff(l[key], r[key], simpleArray);
 
       if (isObject(difference) && isEmpty(difference)) return acc;
 

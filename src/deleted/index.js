@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { isEmpty, isObject, properObject } from '../utils';
 
-const deletedDiff = (lhs, rhs) => {
+const deletedDiff = (lhs, rhs, simpleArray = true) => {
   if (lhs === rhs || !isObject(lhs) || !isObject(rhs)) return {};
 
   const l = properObject(lhs);
@@ -14,19 +14,22 @@ const deletedDiff = (lhs, rhs) => {
         if (oldFields.length === 0) {
           return acc
         }
-        const oldFieldsIndex = _.map(oldFields, o => ({
+        if (simpleArray) {
+          return { ...acc, [key]: { before: _.uniq(_.difference(l[key], r[key])) } }
+        }
+        const oldFieldsIndices = _.map(oldFields, o => ({
           content: o,
-          index: []
+          indices: []
         }))
         for (let i = 0; i < l[key].length; i++) {
           const index = _.findIndex(oldFields, o => _.isEqual(o, l[key][i]))
           if (index !== -1) {
-            oldFieldsIndex[index].index.push(i)
+            oldFieldsIndices[index].indices.push(i)
           }
         }
-        return { ...acc, [key]: { before: oldFieldsIndex } }
+        return { ...acc, [key]: { before: oldFieldsIndices } }
       }
-      const difference = deletedDiff(l[key], r[key]);
+      const difference = deletedDiff(l[key], r[key], simpleArray);
 
       if (isObject(difference) && isEmpty(difference)) return acc;
 
