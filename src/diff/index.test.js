@@ -56,7 +56,7 @@ describe('.diff', () => {
       });
 
       test('returns subset of right hand side value when nested values differ', () => {
-        expect(diff({ a: { b: 1, c: 2} }, { a: { b: 1, c: 3 } })).toEqual({ a: { c: 3 } });
+        expect(diff({ a: { b: 1, c: 2 } }, { a: { b: 1, c: 3 } })).toEqual({ a: { c: 3 } });
       });
 
       test('returns subset of right hand side value when nested values differ at multiple paths', () => {
@@ -72,7 +72,7 @@ describe('.diff', () => {
       });
 
       test('returns keys as undefined when deleted from right hand side', () => {
-        expect(diff({ a: 1, b: { c: 2 }}, { a: 1 })).toEqual({ b: undefined });
+        expect(diff({ a: 1, b: { c: 2 } }, { a: 1 })).toEqual({ b: undefined });
       });
     });
 
@@ -139,7 +139,7 @@ describe('.diff', () => {
 
       test('returns subset of right hand side value when nested values differ', () => {
         const lhs = Object.create(null);
-        lhs.a = { b: 1, c: 2};
+        lhs.a = { b: 1, c: 2 };
         const rhs = Object.create(null);
         rhs.a = { b: 1, c: 3 };
         expect(diff(lhs, rhs)).toEqual({ a: { c: 3 } });
@@ -171,6 +171,28 @@ describe('.diff', () => {
         rhs.a = 1;
         rhs.b = 2;
         expect(diff(lhs, rhs)).toEqual({ b: 2 });
+      });
+
+      test('returns value of modified array', () => {
+        const lhs = Object.create(null);
+        lhs.a = [1];
+        const rhs = Object.create(null);
+        rhs.a = [1];
+        rhs.a.push(2)
+        expect(diff(lhs, rhs, true)).toEqual(rhs);
+      });
+
+      test('returns value of modified array in nested object', () => {
+        const lhs = Object.create(null);
+        lhs.foo = { bar: [1] };
+        lhs.a = 1
+        const rhs = Object.create(null);
+        rhs.a = 1
+        rhs.foo = { bar: [1] };
+        rhs.foo.bar.push(2)
+        const res = diff(lhs, rhs, true);
+        console.log(res);
+        expect(res).toEqual({ foo: { bar: [1, 2] } });
       });
     });
   });
