@@ -1,4 +1,4 @@
-import { isDate, isEmptyObject, isObject, hasOwnProperty } from './utils';
+import { isDate, isEmptyObject, isObject, hasOwnProperty } from './utils.js';
 
 const updatedDiff = (lhs, rhs) => {
   if (lhs === rhs) return {};

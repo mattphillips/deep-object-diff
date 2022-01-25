@@ -1,4 +1,4 @@
-import { isObject, hasOwnProperty } from './utils';
+import { isObject, hasOwnProperty } from './utils.js';
 
 const getLargerArray = (l, r) => l.length > r.length ? l : r;
 
