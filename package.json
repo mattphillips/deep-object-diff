@@ -9,9 +9,6 @@
     "index.d.ts",
     "README.md"
   ],
-  "engines": {
-    "node": "^12.13.0 || ^14.15.0 || >=16.0.0"
-  },
   "scripts": {
     "build": "babel src -d dist --ignore \"**/*.test.js\"",
     "prepublish": "yarn build",
