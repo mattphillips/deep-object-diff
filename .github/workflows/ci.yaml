@@ -9,7 +9,7 @@ on:
 
 jobs:
   test-node:
-    name: Test on Node.js v${{ matrix.node-version }} and jest v${{ matrix.jest-version }}
+    name: Test on Node.js v${{ matrix.node-version }}
     strategy:
       fail-fast: false
       matrix:
@@ -24,6 +24,7 @@ jobs:
           cache: yarn
       - run: yarn install
       - run: yarn test:coverage
+      - uses: codecov/codecov-action@v2
 
   test-os:
     name: Test on ${{ matrix.os }} using Node.js LTS
@@ -41,6 +42,7 @@ jobs:
           cache: yarn
       - run: yarn install
       - run: yarn test:coverage
+      - uses: codecov/codecov-action@v2
 
   lint:
     name: Run ESLint 
