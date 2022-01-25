@@ -3,3 +3,4 @@ dist
 coverage
 npm-debug.log
 yarn-error.log
+dist-es

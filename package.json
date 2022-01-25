@@ -3,14 +3,17 @@
   "version": "1.1.2",
   "description": "Deep diffs two objects, including nested structures of arrays and objects, and return the difference.",
   "main": "dist/index.js",
+  "module": "dist-es/index.js",
   "types": "./index.d.ts",
   "files": [
     "dist",
+    "dist-es",
     "index.d.ts",
     "README.md"
   ],
   "scripts": {
-    "build": "babel src -d dist --ignore \"**/*.test.js\"",
+    "build": "babel src -d dist --ignore \"**/*.test.js\" && yarn build:esmodule",
+    "build:esmodule": "rm -rf dist-es && mkdir dist-es && cp -r src/* dist-es &&  rm -rf dist-es/**/*.test.js",
     "prepublish": "yarn build",
     "lint": "eslint src",
     "test": "jest",
