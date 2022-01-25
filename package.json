@@ -6,8 +6,8 @@
   "module": "mjs/index.js",
   "exports": {
     ".": {
-      "import": "./cjs/index.js",
-      "require": "./mjs/index.js"
+      "import": "./mjs/index.js",
+      "require": "./cjs/index.js"
     }
   },
   "types": "./index.d.ts",
