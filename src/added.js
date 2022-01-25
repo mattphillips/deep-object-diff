@@ -1,4 +1,4 @@
-import { isEmpty, isObject, hasOwnProperty } from '../utils';
+import { isEmpty, isObject, hasOwnProperty } from './utils';
 
 const addedDiff = (lhs, rhs) => {
 

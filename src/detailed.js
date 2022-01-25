@@ -1,6 +1,6 @@
-import addedDiff from '../added';
-import deletedDiff from '../deleted';
-import updatedDiff from '../updated';
+import addedDiff from './added';
+import deletedDiff from './deleted';
+import updatedDiff from './updated';
 
 const detailedDiff = (lhs, rhs) => ({
   added: addedDiff(lhs, rhs),

@@ -1,4 +1,4 @@
-import { isDate, isEmpty, isObject } from './';
+import { isDate, isEmpty, isObject } from '../src/utils';
 
 describe('utils', () => {
 

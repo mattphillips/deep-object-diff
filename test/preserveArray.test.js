@@ -1,4 +1,4 @@
-import preserveArray from './preserveArray';
+import preserveArray from '../src/preserveArray';
 
 describe('.preserveArray', () => {
   test('returns diff with nested objects converted back to arrays when property is deleted', () => {

@@ -1,6 +1,6 @@
-import diff from './';
+import diff from '../src/diff';
 
-describe('.arrayDiff', () => {
+describe('.diff', () => {
 
   describe('base case', () => {
     describe('equal', () => {
@@ -43,6 +43,10 @@ describe('.arrayDiff', () => {
 
   describe('recursive case', () => {
     describe('object', () => {
+      test("return right hand side empty object value when left hand side has been updated", () => {
+        expect(diff({ a: 1 }, { a: {} })).toEqual({ a: {} });
+      });
+
       test('returns right hand side value when given objects are different', () => {
         expect(diff({ a: 1 }, { a: 2 })).toEqual({ a: 2 });
       });
@@ -77,28 +81,23 @@ describe('.arrayDiff', () => {
     });
 
     describe('arrays', () => {
+      test("return right hand side empty object value when left hand side has been updated", () => {
+        expect(diff([{ a: 1 }], [{ a: {} }])).toEqual({ 0: { a: {} } });
+      });
       test('returns right hand side value as object of indices to value when arrays are different', () => {
-        expect(diff([1], [2])).toEqual([2]);
+        expect(diff([1], [2])).toEqual({ 0: 2 });
       });
 
       test('returns subset of right hand side array as object of indices to value when arrays differs at multiple indicies', () => {
-        const expected = [9, 8, 3];
-        delete expected['2'];
-        expect(diff([1, 2, 3], [9, 8, 3])).toEqual(expected);
+        expect(diff([1, 2, 3], [9, 8, 3])).toEqual({ 0: 9, 1: 8 });
       });
 
       test('returns subset of right hand side array as object of indices to value when right hand side array has deletions', () => {
-        const expected = [1, 3, undefined];
-        delete expected['0'];
-        expect(diff([1, 2, 3], [1, 3])).toEqual(expected);
+        expect(diff([1, 2, 3], [1, 3])).toEqual({ 1: 3, 2: undefined });
       });
 
       test('returns subset of right hand side array as object of indices to value when right hand side array has additions', () => {
-        const expected = [1, 2, 3, 9];
-        delete expected['0'];
-        delete expected['1'];
-        delete expected['2'];
-        expect(diff([1, 2, 3], [1, 2, 3, 9])).toEqual(expected);
+        expect(diff([1, 2, 3], [1, 2, 3, 9])).toEqual({ 3: 9 });
       });
     });
 
@@ -112,17 +111,17 @@ describe('.arrayDiff', () => {
 
       test('returns right hand side date when updated', () => {
         expect(diff({ date: lhs }, { date: rhs })).toEqual({ date: rhs });
-        expect(diff([lhs], [rhs])).toEqual([rhs]);
+        expect(diff([lhs], [rhs])).toEqual({ 0: rhs });
       });
 
       test('returns undefined when date deleted', () => {
         expect(diff({ date: lhs }, {})).toEqual({ date: undefined });
-        expect(diff([lhs], [])).toEqual([undefined]);
+        expect(diff([lhs], [])).toEqual({ 0: undefined });
       });
 
       test('returns right hand side when date is added', () => {
         expect(diff({}, { date: rhs })).toEqual({ date: rhs });
-        expect(diff([], [rhs])).toEqual([rhs]);
+        expect(diff([], [rhs])).toEqual({ 0: rhs });
       });
     });
 

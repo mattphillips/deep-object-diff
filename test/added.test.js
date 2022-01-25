@@ -1,4 +1,4 @@
-import addedDiff from './';
+import addedDiff from '../src/added';
 
 describe('.addedDiff', () => {
 

@@ -12,7 +12,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "babel src -d dist --ignore \"**/*.test.js\" && yarn build:esmodule",
+    "build": "babel src -d dist && yarn build:esmodule",
     "build:esmodule": "rm -rf dist-es && mkdir dist-es && cp -r src/* dist-es &&  rm -rf dist-es/**/*.test.js",
     "prepublish": "yarn build",
     "lint": "eslint src",

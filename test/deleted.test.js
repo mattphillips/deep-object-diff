@@ -1,4 +1,4 @@
-import deletedDiff from './';
+import deletedDiff from '../src/deleted';
 
 describe('.deletedDiff', () => {
 
