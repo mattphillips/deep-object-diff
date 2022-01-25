@@ -43,6 +43,10 @@ describe('.updatedDiff', () => {
 
   describe('recursive case', () => {
     describe('object', () => {
+      test("return right hand side empty object value when left hand side has been updated", () => {
+        expect(updatedDiff({ a: 1 }, { a: {} })).toEqual({ a: {} });
+      });
+
       test('returns right hand side value when given objects are different at root', () => {
         expect(updatedDiff({ a: 1 }, { a: 2 })).toEqual({ a: 2 });
       });
@@ -77,6 +81,10 @@ describe('.updatedDiff', () => {
     });
 
     describe('arrays', () => {
+      test("return right hand side empty object value when left hand side has been updated", () => {
+        expect(updatedDiff([{ a: 1 }], [{ a: {} }])).toEqual({ 0: { a: {} } });
+      });
+
       test('returns right hand side value as object of indices to value when arrays are different', () => {
         expect(updatedDiff([1], [2])).toEqual({ 0: 2 });
       });
