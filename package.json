@@ -1,6 +1,6 @@
 {
   "name": "deep-object-diff",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Deep diffs two objects, including nested structures of arrays and objects, and return the difference.",
   "main": "cjs/index.js",
   "module": "mjs/index.js",
