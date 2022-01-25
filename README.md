@@ -8,8 +8,8 @@
 
 <hr />
 
-[![Build Status](https://img.shields.io/travis/mattphillips/deep-object-diff/master.svg?style=flat-square)](https://travis-ci.org/mattphillips/deep-object-diff/master)
-[![Code Coverage](https://img.shields.io/coveralls/mattphillips/deep-object-diff.svg?style=flat-square)](https://coveralls.io/github/mattphillips/deep-object-diff?branch=master)
+[![Build Status](https://github.com/mattphillips/deep-object-diff/actions/workflows/ci.yaml/badge.svg)](https://github.com/mattphillips/deep-object-diff/actions/workflows/ci.yaml)
+[![Code coverage](https://codecov.io/gh/mattphillips/deep-object-diff/branch/main/graph/badge.svg?token=EwnXzDGW3x)](https://codecov.io/gh/mattphillips/deep-object-diff)
 [![version](https://img.shields.io/npm/v/deep-object-diff.svg?style=flat-square)](https://www.npmjs.com/package/deep-object-diff)
 [![downloads](https://img.shields.io/npm/dm/deep-object-diff.svg?style=flat-square)](http://npm-stat.com/charts.html?package=deep-object-diff&from=2016-11-23)
 [![MIT License](https://img.shields.io/npm/l/deep-object-diff.svg?style=flat-square)](https://github.com/mattphillips/deep-object-diff/blob/master/LICENSE)
@@ -40,22 +40,8 @@ A small library that can deep diff two JavaScript Objects, including nested stru
 
 ## Importing
 
-ES6 / Babel:
 ``` js
 import { diff, addedDiff, deletedDiff, updatedDiff, detailedDiff } from 'deep-object-diff';
-```
-
-ES5:
-``` js
-const { diff, addedDiff, deletedDiff, detailedDiff, updatedDiff } = require("deep-object-diff");
-
-// OR
-
-const diff = require("deep-object-diff").diff;
-const addedDiff = require("deep-object-diff").addedDiff;
-const deletedDiff = require("deep-object-diff").deletedDiff;
-const detailedDiff = require("deep-object-diff").detailedDiff;
-const updatedDiff = require("deep-object-diff").updatedDiff;
 ```
 
 ## Usage:
