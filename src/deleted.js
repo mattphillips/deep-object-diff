@@ -1,4 +1,4 @@
-import { isEmpty, isObject, hasOwnProperty } from './utils.js';
+import { isEmpty, isObject, hasOwnProperty, makeObjectWithoutPrototype } from './utils.js';
 
 const deletedDiff = (lhs, rhs) => {
   if (lhs === rhs || !isObject(lhs) || !isObject(rhs)) return {};
@@ -18,7 +18,7 @@ const deletedDiff = (lhs, rhs) => {
 
     acc[key] = undefined;
     return acc;
-  }, {});
+  }, makeObjectWithoutPrototype());
 };
 
 export default deletedDiff;

@@ -1,85 +1,70 @@
 import addedDiff from "../src/added";
+import updatedDiff from "../src/updated";
+import diff from "../src/diff";
+import deletedDiff from "../src/deleted";
 
 describe("Prototype pollution", () => {
-  test("Demonstrate prototype pollution globally across all objects", () => {
-    const a = {};
-    const b = new Object();
+  describe("diff", () => {
+    test("should not pollute returned diffs prototype", () => {
+      const l = { role: "user" };
+      const r = JSON.parse('{ "role": "user", "__proto__": { "role": "admin" } }');
+      const difference = diff(l, r);
 
-    expect(a.hello).toBeUndefined();
-    expect(b.hello).toBeUndefined();
-    expect({}.hello).toBeUndefined();
+      expect(l.role).toBe("user");
+      expect(r.role).toBe("user");
+      expect(difference.role).toBeUndefined();
+    });
 
-    b.__proto__.hello = "world";
+    test("should not pollute returned diffs prototype on nested diffs", () => {
+      const l = { about: { role: "user" } };
+      const r = JSON.parse('{ "about": { "__proto__": { "role": "admin" } } }');
+      const difference = addedDiff(l, r);
 
-    expect(a.hello).toBe("world");
-    expect(b.hello).toBe("world");
-    expect({}.hello).toBe("world");
+      expect(l.about.role).toBe("user");
+      expect(r.about.role).toBeUndefined();
+      expect(difference.about.role).toBeUndefined();
+    });
   });
 
-  test("addedDiff does not pollute global prototype when running diff with added `__proto__` key", () => {
-    const a = { role: "user" };
-    const b = JSON.parse('{ "__proto__": { "role": "admin" } }');
+  describe("addedDiff", () => {
+    test("addedDiff should not pollute returned diffs prototype", () => {
+      const l = { role: "user" };
+      const r = JSON.parse('{ "__proto__": { "role": "admin" } }');
+      const difference = addedDiff(l, r);
 
-    expect(a.role).toBe("user");
-    expect(a.__proto__.role).toBeUndefined();
-    expect(b.role).toBeUndefined();
-    expect(b.__proto__.role).toBe("admin");
-    expect({}.role).toBeUndefined();
-    expect({}.__proto__role).toBeUndefined();
+      expect(l.role).toBe("user");
+      expect(r.role).toBeUndefined();
+      expect(difference.role).toBeUndefined();
+    });
 
-    const difference = addedDiff(a, b);
+    test("should not pollute returned diffs prototype on nested diffs", () => {
+      const l = { about: { role: "user" } };
+      const r = JSON.parse('{ "about": { "__proto__": { "role": "admin" } } }');
+      const difference = addedDiff(l, r);
 
-    expect(a.role).toBe("user");
-    expect(a.__proto__.role).toBeUndefined();
-    expect(b.__proto__.role).toBe("admin");
-    expect(b.role).toBeUndefined();
-    expect({}.role).toBeUndefined();
-    expect({}.__proto__role).toBeUndefined();
-
-    expect(difference).toEqual({ __proto__: { role: "admin" } });
+      expect(l.about.role).toBe("user");
+      expect(r.about.role).toBeUndefined();
+      expect(difference.about.role).toBeUndefined();
+    });
   });
 
-  test("addedDiff does not pollute global prototype when running diff with added `__proto__` key generated from JSON.parse and mutating original left hand object", () => {
-    let a = { role: "user" };
-    // Note: Don't trust `JSON.parse`!!!
-    const b = JSON.parse('{ "__proto__": { "role": "admin" } }');
+  test("updatedDiff should not pollute returned diffs prototype", () => {
+    const l = { role: "user" };
+    const r = JSON.parse('{ "role": "user", "__proto__": { "role": "admin" } }');
+    const difference = updatedDiff(l, r);
 
-    expect(a.role).toBe("user");
-    expect(a.__proto__.role).toBeUndefined();
-    expect(b.role).toBeUndefined();
-    expect(b.__proto__.role).toBe("admin");
-    expect({}.role).toBeUndefined();
-    expect({}.__proto__role).toBeUndefined();
-
-    // Note: although this does not pollute the global proto, it does pollute the original object. (Don't mutate kids!)
-    a = addedDiff(a, b);
-
-    expect(a.role).toBe("admin");
-    expect(a.__proto__.role).toBe("admin");
-    expect(b.__proto__.role).toBe("admin");
-    expect(b.role).toBeUndefined();
-    expect({}.role).toBeUndefined();
-    expect({}.__proto__role).toBeUndefined();
+    expect(l.role).toBe("user");
+    expect(r.role).toBe("user");
+    expect(difference.role).toBeUndefined();
   });
 
-  test("addedDiff does not pollute global prototype or original object when running diff with added `__proto__` key", () => {
-    let a = { role: "user" };
-    const b = { __proto__: { role: "admin" } };
+  test("deletedDiff should not pollute returned diffs prototype", () => {
+    const l = { role: "user" };
+    const r = JSON.parse('{ "__proto__": { "role": "admin" } }');
+    const difference = deletedDiff(l, r);
 
-    expect(a.role).toBe("user");
-    expect(a.__proto__.role).toBeUndefined();
-    expect(b.role).toBe("admin");
-    expect(b.__proto__.role).toBe("admin");
-    expect({}.role).toBeUndefined();
-    expect({}.__proto__role).toBeUndefined();
-
-    a = addedDiff(a, b);
-
-    expect(a.role).toBeUndefined();
-    expect(a.__proto__.role).toBeUndefined();
-    expect(b.role).toBe("admin");
-    expect(b.__proto__.role).toBe("admin");
-    expect({}.role).toBeUndefined();
-    expect({}.__proto__role).toBeUndefined();
+    expect(l.role).toBe("user");
+    expect(r.role).toBeUndefined();
+    expect(difference.role).toBeUndefined();
   });
 });
