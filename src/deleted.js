@@ -3,12 +3,9 @@ import { isEmpty, isObject, hasOwnProperty, makeObjectWithoutPrototype } from '.
 const deletedDiff = (lhs, rhs) => {
   if (lhs === rhs || !isObject(lhs) || !isObject(rhs)) return {};
 
-  const l = lhs;
-  const r = rhs;
-
-  return Object.keys(l).reduce((acc, key) => {
-    if (hasOwnProperty(r, key)) {
-      const difference = deletedDiff(l[key], r[key]);
+  return Object.keys(lhs).reduce((acc, key) => {
+    if (hasOwnProperty(rhs, key)) {
+      const difference = deletedDiff(lhs[key], rhs[key]);
 
       if (isObject(difference) && isEmpty(difference)) return acc;
 
