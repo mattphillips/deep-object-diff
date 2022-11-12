@@ -1,4 +1,4 @@
-import { isDate, isEmptyObject, isObject, hasOwnProperty } from './utils.js';
+import { isDate, isEmptyObject, isObject, hasOwnProperty, makeObjectWithoutPrototype } from './utils.js';
 
 const diff = (lhs, rhs) => {
   if (lhs === rhs) return {}; // equal return no diff
@@ -15,7 +15,7 @@ const diff = (lhs, rhs) => {
     }
 
     return acc;
-  }, {});
+  }, makeObjectWithoutPrototype());
 
   if (isDate(l) || isDate(r)) {
     if (l.valueOf() == r.valueOf()) return {};

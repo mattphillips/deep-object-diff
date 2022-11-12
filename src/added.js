@@ -1,4 +1,4 @@
-import { isEmpty, isObject, hasOwnProperty } from './utils.js';
+import { isEmpty, isObject, hasOwnProperty, makeObjectWithoutPrototype } from './utils.js';
 
 const addedDiff = (lhs, rhs) => {
 
@@ -19,7 +19,7 @@ const addedDiff = (lhs, rhs) => {
 
     acc[key] = r[key];
     return acc;
-  }, {});
+  }, makeObjectWithoutPrototype());
 };
 
 export default addedDiff;

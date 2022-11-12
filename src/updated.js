@@ -1,4 +1,4 @@
-import { isDate, isEmptyObject, isObject, hasOwnProperty } from './utils.js';
+import { isDate, isEmptyObject, isObject, hasOwnProperty, makeObjectWithoutPrototype } from './utils.js';
 
 const updatedDiff = (lhs, rhs) => {
   if (lhs === rhs) return {};
@@ -26,7 +26,7 @@ const updatedDiff = (lhs, rhs) => {
     }
 
     return acc;
-  }, {});
+  }, makeObjectWithoutPrototype());
 };
 
 export default updatedDiff;
