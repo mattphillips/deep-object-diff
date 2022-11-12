@@ -4,12 +4,10 @@ const addedDiff = (lhs, rhs) => {
 
   if (lhs === rhs || !isObject(lhs) || !isObject(rhs)) return {};
 
-  const l = lhs;
-  const r = rhs;
 
-  return Object.keys(r).reduce((acc, key) => {
-    if (hasOwnProperty(l, key)) {
-      const difference = addedDiff(l[key], r[key]);
+  return Object.keys(rhs).reduce((acc, key) => {
+    if (hasOwnProperty(lhs, key)) {
+      const difference = addedDiff(lhs[key], rhs[key]);
 
       if (isObject(difference) && isEmpty(difference)) return acc;
 
@@ -17,7 +15,7 @@ const addedDiff = (lhs, rhs) => {
       return acc;
     }
 
-    acc[key] = r[key];
+    acc[key] = rhs[key];
     return acc;
   }, makeObjectWithoutPrototype());
 };
