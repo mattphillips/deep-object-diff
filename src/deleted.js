@@ -13,7 +13,7 @@ const deletedDiff = (lhs, rhs) => {
       return acc;
     }
 
-    acc[key] = undefined;
+    acc[key] = lhs[key];
     return acc;
   }, makeObjectWithoutPrototype());
 };
