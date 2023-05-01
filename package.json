@@ -6,9 +6,9 @@
   "module": "mjs/index.js",
   "exports": {
     ".": {
+      "types": "./index.d.ts",
       "import": "./mjs/index.js",
-      "require": "./cjs/index.js",
-      "types": "./index.d.ts"
+      "require": "./cjs/index.js"
     }
   },
   "types": "./index.d.ts",
