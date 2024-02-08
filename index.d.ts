@@ -1,15 +1,44 @@
-export function diff (originalObj: object, updatedObj: object): object
+type Primitive = string | number | boolean | null | undefined;
 
-export function addedDiff (originalObj: object, updatedObj: object): object
+export type Diff<T> = T extends Primitive
+  ? T
+  : T extends Array<infer U>
+  ? { [key: string]: Diff<U> }
+  : { [P in keyof T]?: Diff<T[P]> };
 
-export function deletedDiff (originalObj: object, updatedObj: object): object
+export type DiffRemovable<T> = T extends Primitive
+  ? T
+  : T extends Array<infer U>
+  ? { [key: string]: DiffRemovable<U | undefined> }
+  : { [P in keyof T]?: DiffRemovable<T[P]> };
 
-export function updatedDiff (originalObj: object, updatedObj: object): object
+export function diff<T extends object>(
+  originalObj: T,
+  updatedObj: T,
+): DiffRemovable<T>;
 
-export interface DetailedDiff {
-    added: object
-    deleted: object
-    updated: object
-}
+export function addedDiff<T extends object>(
+  originalObj: T,
+  updatedObj: T,
+): Diff<T>;
 
-export function detailedDiff (originalObj: object, updatedObj: object): DetailedDiff
+export function deletedDiff<T extends object>(
+  originalObj: T,
+  updatedObj: T,
+): DiffRemovable<T>;
+
+export function updatedDiff<T extends object>(
+  originalObj: T,
+  updatedObj: T,
+): Diff<T>;
+
+export type DetailedDiff<T> = {
+  added: Diff<T>;
+  deleted: DiffRemovable<T>;
+  updated: Diff<T>;
+};
+
+export function detailedDiff<T extends object>(
+  originalObj: T,
+  updatedObj: T,
+): DetailedDiff<T>;
