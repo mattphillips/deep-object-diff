@@ -2,7 +2,7 @@
     "extends": "./tsconfig",
     "compilerOptions": {
         "module": "esnext",
-        "outDir": "./dist/esm"
+        "outDir": "./dist/mjs"
     },
     "exclude": ["test/**/*.ts"]
 }

@@ -2,22 +2,23 @@
     "name": "deep-object-diff",
     "version": "1.2.0",
     "description": "Deep diffs two objects, including nested structures of arrays and objects, and return the difference.",
-    "main": "./dist/cjs/index.js",
-    "module": "./dist/esm/index.js",
+    "main": "./dist/cjs/index.cjs",
+    "module": "./dist/mjs/index.mjs",
+    "type": "module",
     "exports": {
         ".": {
             "import": {
-                "types": "./dist/esm/index.d.ts",
-                "default": "./dist/esm/index.js"
+                "types": "./dist/mjs/index.d.mts",
+                "default": "./dist/mjs/index.mjs"
             },
             "require": {
-                "types": "./dist/cjs/index.d.ts",
-                "default": "./dist/cjs/index.js"
+                "types": "./dist/cjs/index.d.cts",
+                "default": "./dist/cjs/index.cjs"
             }
         }
     },
     "scripts": {
-        "build": "rm -rf dist && tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json",
+        "build": "rm -rf dist && tsc -p tsconfig.cjs.json && tsc -p tsconfig.mjs.json && node ./scripts/build.js",
         "prepare": "npm run build",
         "lint": "eslint src",
         "test": "jest",
