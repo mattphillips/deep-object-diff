@@ -18,7 +18,7 @@
     },
     "scripts": {
         "build": "rm -rf dist && tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json",
-        "prepublish": "npm run build",
+        "prepare": "npm run build",
         "lint": "eslint src",
         "test": "jest",
         "test:coverage": "npm test -- --coverage",
