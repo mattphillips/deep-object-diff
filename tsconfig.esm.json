@@ -3,5 +3,6 @@
     "compilerOptions": {
         "module": "esnext",
         "outDir": "./dist/esm"
-    }
+    },
+    "exclude": ["test/**/*.ts"]
 }

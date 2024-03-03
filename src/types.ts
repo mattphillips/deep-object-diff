@@ -1,17 +1,38 @@
+type ElementType<T> = T extends unknown[]
+    ? T extends (infer U)[]
+        ? U
+        : never
+    : T;
+
+type EmptyObject = Record<string, never>;
+
 export type DiffDeletedType<T, U> =
     | {
-          [P in Exclude<keyof T, keyof U>]: undefined;
+          [P in Exclude<keyof ElementType<T>, keyof ElementType<U>>]: undefined;
       }
-    | Record<string, never>;
+    | EmptyObject;
 
 export type DiffAddedType<T, U> =
     | {
-          [P in Exclude<keyof U, keyof T>]: U[P];
+          [P in Exclude<
+              keyof ElementType<U>,
+              keyof ElementType<T>
+          >]: ElementType<U>[P];
       }
-    | Record<string, never>;
+    | EmptyObject;
+
+// export type DiffUpdatedType<T, U> =
+//     | {
+//           [P in keyof T & keyof U]?: DiffUpdatedType<T[P], U[P]>;
+//       }
+//     | Record<string, never>;
 
 export type DiffUpdatedType<T, U> =
     | {
-          [P in keyof T & keyof U]?: DiffUpdatedType<T[P], U[P]>;
+          [P in keyof ElementType<T> & keyof ElementType<U>]?: DiffUpdatedType<
+              ElementType<T>[P],
+              ElementType<U>[P]
+          >;
       }
-    | Record<string, never>;
+    | U
+    | EmptyObject;

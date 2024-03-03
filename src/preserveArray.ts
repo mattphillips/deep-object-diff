@@ -5,9 +5,7 @@ const getLargerArray = (l: unknown[], r: unknown[]) =>
     l.length > r.length ? l : r;
 
 const preserve = <T, U>(
-    diff:
-        | U
-        | (DiffAddedType<T, U> & DiffDeletedType<T, U> & DiffUpdatedType<T, U>),
+    diff: DiffAddedType<T, U> & DiffDeletedType<T, U> & DiffUpdatedType<T, U>,
     left: T,
     right: U
 ) => {

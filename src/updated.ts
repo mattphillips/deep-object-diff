@@ -10,7 +10,7 @@ import {
 const updatedDiff = <T, U>(lhs: T, rhs: U): DiffUpdatedType<T, U> => {
     if ((lhs as unknown) === (rhs as unknown)) return {};
 
-    if (!isObject(lhs) || !isObject(rhs)) return rhs;
+    if (!isObject(lhs) || !isObject(rhs)) return rhs as DiffUpdatedType<T, U>;
 
     if (isDate(lhs) || isDate(rhs)) {
         if (lhs.valueOf() == rhs.valueOf()) return {};
