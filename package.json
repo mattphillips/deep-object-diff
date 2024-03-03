@@ -2,12 +2,18 @@
     "name": "deep-object-diff",
     "version": "1.2.0",
     "description": "Deep diffs two objects, including nested structures of arrays and objects, and return the difference.",
-    "main": "dist/cjs/index.js",
-    "module": "dist/esm/index.js",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.js",
     "exports": {
         ".": {
-            "import": "./dist/mjs/index.js",
-            "require": "./dist/cjs/index.js"
+            "import": {
+                "types": "./dist/esm/index.d.ts",
+                "default": "./dist/esm/index.js"
+            },
+            "require": {
+                "types": "./dist/cjs/index.d.ts",
+                "default": "./dist/cjs/index.js"
+            }
         }
     },
     "scripts": {
