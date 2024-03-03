@@ -21,8 +21,8 @@
         "prepublish": "npm run build",
         "lint": "eslint src",
         "test": "jest",
-        "test:coverage": "yarn test --coverage",
-        "test:watch": "yarn test -- --watch"
+        "test:coverage": "npm test -- --coverage",
+        "test:watch": "npm test -- --watch"
     },
     "author": "Matt Phillips",
     "license": "MIT",

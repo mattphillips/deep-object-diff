@@ -21,12 +21,6 @@ export type DiffAddedType<T, U> =
       }
     | EmptyObject;
 
-// export type DiffUpdatedType<T, U> =
-//     | {
-//           [P in keyof T & keyof U]?: DiffUpdatedType<T[P], U[P]>;
-//       }
-//     | Record<string, never>;
-
 export type DiffUpdatedType<T, U> =
     | {
           [P in keyof ElementType<T> & keyof ElementType<U>]?: DiffUpdatedType<
