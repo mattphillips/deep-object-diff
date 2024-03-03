@@ -30,3 +30,7 @@ export type DiffUpdatedType<T, U> =
       }
     | U
     | EmptyObject;
+
+export type DiffType<T, U> =
+    | U
+    | (DiffAddedType<T, U> & DiffDeletedType<T, U> & DiffUpdatedType<T, U>);

@@ -3,7 +3,12 @@ import addedDiff from "./added";
 import deletedDiff from "./deleted";
 import updatedDiff from "./updated";
 import detailedDiff from "./detailed";
-import { DiffAddedType, DiffDeletedType, DiffUpdatedType } from "./types";
+import {
+    DiffType,
+    DiffAddedType,
+    DiffDeletedType,
+    DiffUpdatedType,
+} from "./types";
 
 export {
     addedDiff,
@@ -11,6 +16,7 @@ export {
     deletedDiff,
     updatedDiff,
     detailedDiff,
+    DiffType,
     DiffAddedType,
     DiffDeletedType,
     DiffUpdatedType,

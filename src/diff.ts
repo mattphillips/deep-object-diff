@@ -1,4 +1,4 @@
-import type { DiffUpdatedType, DiffAddedType, DiffDeletedType } from "./types";
+import type { DiffType } from "./types";
 import {
     isDate,
     isEmptyObject,
@@ -7,12 +7,7 @@ import {
     makeObjectWithoutPrototype,
 } from "./utils";
 
-const diff = <T, U>(
-    lhs: T,
-    rhs: U
-):
-    | U
-    | (DiffAddedType<T, U> & DiffDeletedType<T, U> & DiffUpdatedType<T, U>) => {
+const diff = <T, U>(lhs: T, rhs: U): DiffType<T, U> => {
     if ((lhs as unknown) === (rhs as unknown)) return {}; // equal return no diff
 
     if (!isObject(lhs) || !isObject(rhs)) return rhs; // return updated rhs
@@ -52,9 +47,7 @@ const diff = <T, U>(
 
         acc[key] = difference; // return updated key
         return acc; // return updated key
-    }, deletedValues) as DiffAddedType<T, U> &
-        DiffDeletedType<T, U> &
-        DiffUpdatedType<T, U>;
+    }, deletedValues) as DiffType<T, U>;
 };
 
 export default diff;
