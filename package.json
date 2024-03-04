@@ -1,59 +1,53 @@
 {
-  "name": "deep-object-diff",
-  "version": "1.1.9",
-  "description": "Deep diffs two objects, including nested structures of arrays and objects, and return the difference.",
-  "main": "cjs/index.js",
-  "module": "mjs/index.js",
-  "exports": {
-    ".": {
-      "import": "./mjs/index.js",
-      "require": "./cjs/index.js",
-      "types": "./index.d.ts"
-    }
-  },
-  "types": "./index.d.ts",
-  "scripts": {
-    "build": "rm -rf dist && babel src -d dist/cjs && node scripts/build.mjs",
-    "prepublish": "yarn build",
-    "lint": "eslint src",
-    "test": "jest",
-    "test:coverage": "yarn test --coverage",
-    "test:watch": "yarn test -- --watch"
-  },
-  "author": "Matt Phillips",
-  "license": "MIT",
-  "devDependencies": {
-    "@babel/cli": "^7.16.8",
-    "@babel/core": "^7.16.12",
-    "@babel/preset-env": "^7.16.11",
-    "babel-jest": "^27.4.6",
-    "eslint": "^8.7.0",
-    "jest": "^27.4.7"
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": "12"
-          }
+    "name": "deep-object-diff",
+    "version": "1.2.0",
+    "description": "Deep diffs two objects, including nested structures of arrays and objects, and return the difference.",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/mjs/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/mjs/index.d.ts",
+                "default": "./dist/mjs/index.js"
+            },
+            "require": {
+                "types": "./dist/cjs/index.d.ts",
+                "default": "./dist/cjs/index.js"
+            }
         }
-      ]
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mattphillips/deep-object-diff.git"
-  },
-  "keywords": [
-    "diff",
-    "object",
-    "deep",
-    "difference"
-  ],
-  "bugs": {
-    "url": "https://github.com/mattphillips/deep-object-diff/issues"
-  },
-  "homepage": "https://github.com/mattphillips/deep-object-diff#readme"
+    },
+    "scripts": {
+        "build": "rm -rf dist && tsc -p tsconfig.cjs.json && tsc -p tsconfig.mjs.json && node ./scripts/build.js",
+        "prepare": "npm run build",
+        "lint": "eslint src",
+        "test": "jest",
+        "test:coverage": "npm test -- --coverage",
+        "test:watch": "npm test -- --watch"
+    },
+    "author": "Matt Phillips",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/jest": "^29.5.12",
+        "@typescript-eslint/eslint-plugin": "^7.1.0",
+        "@typescript-eslint/parser": "^7.1.0",
+        "eslint": "^8.7.0",
+        "jest": "^29.1.2",
+        "ts-jest": "^29.1.2",
+        "typescript": "^5.3.3"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mattphillips/deep-object-diff.git"
+    },
+    "keywords": [
+        "diff",
+        "object",
+        "deep",
+        "difference"
+    ],
+    "bugs": {
+        "url": "https://github.com/mattphillips/deep-object-diff/issues"
+    },
+    "homepage": "https://github.com/mattphillips/deep-object-diff#readme"
 }
